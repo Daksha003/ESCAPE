@@ -15,11 +15,17 @@ const GameUI = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleTestComplete = async (testType, result, questions, answers) => {
+  const handleTestComplete = async (
+    testType,
+    result,
+    param1,
+    param2,
+    param3,
+  ) => {
     setIsLoading(true);
 
     // Store the score
-    onTestComplete(testType, result, questions, answers);
+    onTestComplete(testType, result, param1, param2, param3);
 
     // Simulate processing time with animation
     await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -51,6 +57,29 @@ const GameUI = ({
 
   return (
     <div className="absolute inset-0 z-40">
+      {/* AI System Status Indicator - Top Corner */}
+      <div className="absolute top-4 right-4 z-50 flex items-center gap-2">
+        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900/90 backdrop-blur-sm rounded-full border border-purple-500/30 shadow-lg">
+          <div className="flex gap-1">
+            <span
+              className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse"
+              style={{ animationDelay: "0ms" }}
+            ></span>
+            <span
+              className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse"
+              style={{ animationDelay: "200ms" }}
+            ></span>
+            <span
+              className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse"
+              style={{ animationDelay: "400ms" }}
+            ></span>
+          </div>
+          <span className="text-xs font-mono text-purple-300 tracking-wider">
+            SYSTEM ANALYZING
+          </span>
+        </div>
+      </div>
+
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/70 backdrop-blur-sm"
@@ -91,15 +120,26 @@ const GameUI = ({
                 )}
                 {showUI === "coding" && (
                   <CodingChallenge
-                    onComplete={(result) =>
-                      handleTestComplete("coding", result)
+                    onComplete={(result, code, language, challenge) =>
+                      handleTestComplete(
+                        "coding",
+                        result,
+                        code,
+                        language,
+                        challenge,
+                      )
                     }
                   />
                 )}
                 {showUI === "interview" && (
                   <InterviewPanel
-                    onComplete={(result) =>
-                      handleTestComplete("interview", result)
+                    onComplete={(result, answers, questions) =>
+                      handleTestComplete(
+                        "interview",
+                        result,
+                        answers,
+                        questions,
+                      )
                     }
                   />
                 )}

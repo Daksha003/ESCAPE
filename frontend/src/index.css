@@ -3,84 +3,640 @@
 @tailwind utilities;
 
 body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-        "Helvetica Neue", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-        monospace;
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
-
-
 
 @layer base {
   :root {
-        --background: 0 0% 100%;
-        --foreground: 0 0% 3.9%;
-        --card: 0 0% 100%;
-        --card-foreground: 0 0% 3.9%;
-        --popover: 0 0% 100%;
-        --popover-foreground: 0 0% 3.9%;
-        --primary: 0 0% 9%;
-        --primary-foreground: 0 0% 98%;
-        --secondary: 0 0% 96.1%;
-        --secondary-foreground: 0 0% 9%;
-        --muted: 0 0% 96.1%;
-        --muted-foreground: 0 0% 45.1%;
-        --accent: 0 0% 96.1%;
-        --accent-foreground: 0 0% 9%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 89.8%;
-        --input: 0 0% 89.8%;
-        --ring: 0 0% 3.9%;
-        --chart-1: 12 76% 61%;
-        --chart-2: 173 58% 39%;
-        --chart-3: 197 37% 24%;
-        --chart-4: 43 74% 66%;
-        --chart-5: 27 87% 67%;
-        --radius: 0.5rem;
-    }
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
   .dark {
-        --background: 0 0% 3.9%;
-        --foreground: 0 0% 98%;
-        --card: 0 0% 3.9%;
-        --card-foreground: 0 0% 98%;
-        --popover: 0 0% 3.9%;
-        --popover-foreground: 0 0% 98%;
-        --primary: 0 0% 98%;
-        --primary-foreground: 0 0% 9%;
-        --secondary: 0 0% 14.9%;
-        --secondary-foreground: 0 0% 98%;
-        --muted: 0 0% 14.9%;
-        --muted-foreground: 0 0% 63.9%;
-        --accent: 0 0% 14.9%;
-        --accent-foreground: 0 0% 98%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 14.9%;
-        --input: 0 0% 14.9%;
-        --ring: 0 0% 83.1%;
-        --chart-1: 220 70% 50%;
-        --chart-2: 160 60% 45%;
-        --chart-3: 30 80% 55%;
-        --chart-4: 280 65% 60%;
-        --chart-5: 340 75% 55%;
-    }
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
 }
-
-
 
 @layer base {
   * {
     @apply border-border;
-    }
+  }
   body {
     @apply bg-background text-foreground;
-    }
+  }
+}
+
+/* RoomIntro Animations */
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOutScale {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 0.6s ease-out forwards;
+}
+
+.animate-fade-out-scale {
+  animation: fadeOutScale 0.6s ease-in forwards;
+}
+
+.animate-stay {
+  animation: none;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* KeyUnlock Animation */
+@keyframes keyUnlock {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-key-unlock {
+  animation: keyUnlock 0.6s ease-in-out;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+@keyframes particle {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(0);
+    opacity: 0;
+  }
+}
+
+.animate-particle {
+  animation: particle 1s ease-out forwards;
+}
+
+/* RoomIntro Futuristic Animations */
+
+/* Scan line effect */
+@keyframes scanLine {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+.animate-scan-line {
+  animation: scanLine 2.5s linear infinite;
+}
+
+/* Blinking dots for status label */
+@keyframes blinkDot {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0.3;
+  }
+  60% {
+    opacity: 0.5;
+  }
+}
+
+.animate-blink-dot {
+  animation: blinkDot 1.5s infinite;
+}
+
+.animate-blink-dot-delay-1 {
+  animation: blinkDot 1.5s infinite;
+  animation-delay: 0.2s;
+}
+
+.animate-blink-dot-delay-2 {
+  animation: blinkDot 1.5s infinite;
+  animation-delay: 0.4s;
+}
+
+/* Sequential pulsing progress dots */
+@keyframes pulseDot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
+}
+
+.animate-pulse-dot {
+  animation: pulseDot 1.2s ease-in-out infinite;
+}
+
+.animate-pulse-dot-delay-1 {
+  animation: pulseDot 1.2s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+.animate-pulse-dot-delay-2 {
+  animation: pulseDot 1.2s ease-in-out infinite;
+  animation-delay: 0.4s;
+}
+
+/* Title scale-in animation */
+@keyframes titleScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-title-scale-in {
+  animation: titleScaleIn 0.8s ease-out forwards;
+}
+
+/* Glow pulse for accent elements */
+@keyframes glowPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 5px currentColor,
+      0 0 10px currentColor;
+  }
+  50% {
+    box-shadow:
+      0 0 15px currentColor,
+      0 0 25px currentColor,
+      0 0 35px currentColor;
+  }
+}
+
+.animate-glow-pulse {
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+/* Classroom: Floating math symbols with drift up and down + rotation */
+@keyframes driftUpDown {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.06;
+  }
+  50% {
+    transform: translateY(-60px) rotate(8deg);
+    opacity: 0.06;
+  }
+  90% {
+    opacity: 0.06;
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+}
+
+/* Coding Lab: Falling binary from top to bottom in columns */
+@keyframes fallDown {
+  0% {
+    transform: translateY(-20%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.4;
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(120vh);
+    opacity: 0;
+  }
+}
+
+/* Interview Room: Horizontal scanning lines left to right */
+@keyframes scanHorizontal {
+  0% {
+    transform: translateX(-100vw);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.06;
+  }
+  80% {
+    opacity: 0.06;
+  }
+  100% {
+    transform: translateX(100vw);
+    opacity: 0;
+  }
+}
+
+/* Interview Room: Subtle title glow pulse */
+@keyframes titleGlow {
+  0%,
+  100% {
+    opacity: 0.12;
+  }
+  50% {
+    opacity: 0.22;
+  }
+}
+
+.animate-drift-up-down {
+  animation: driftUpDown 8s ease-in-out infinite;
+}
+
+.animate-fall-down {
+  animation: fallDown 7s linear infinite;
+}
+
+.animate-scan-horizontal {
+  animation: scanHorizontal 10s linear infinite;
+}
+
+.animate-title-glow {
+  animation: titleGlow 3s ease-in-out infinite;
+}
+
+/* SplashScreen Animations */
+
+/* Fade in for splash screen */
+@keyframes splashFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Fade out for splash screen */
+@keyframes splashFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-splash-fade-in {
+  animation: splashFadeIn 0.5s ease-out forwards;
+}
+
+.animate-splash-fade-out {
+  animation: splashFadeOut 0.5s ease-in forwards;
+}
+
+/* Logo scale animation (0.9 -> 1) */
+@keyframes logoScale {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-logo-scale {
+  animation: logoScale 0.8s ease-out forwards;
+}
+
+/* Logo floating movement (very small up/down motion) */
+@keyframes logoFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-logo-float {
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+/* Logo rotation oscillation (1-2 degrees slow oscillation) */
+@keyframes logoRotate {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(1deg);
+  }
+  75% {
+    transform: rotate(-1deg);
+  }
+}
+
+.animate-logo-rotate {
+  animation: logoRotate 4s ease-in-out infinite;
+}
+
+/* Cyan glow pulse effect */
+@keyframes glowPulseCyan {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.animate-glow-pulse {
+  animation: glowPulseCyan 2s ease-in-out infinite;
+}
+
+.animate-glow-pulse-delay {
+  animation: glowPulseCyan 2s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+/* Pulse slow */
+@keyframes pulseSlow {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 3s ease-in-out infinite;
+}
+
+/* Pulse medium */
+@keyframes pulseMedium {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.08);
+  }
+}
+
+.animate-pulse-medium {
+  animation: pulseMedium 2.5s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+
+/* Pulse fast */
+@keyframes pulseFast {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-fast {
+  animation: pulseFast 2s ease-in-out infinite;
+  animation-delay: 0.6s;
+}
+
+/* Light streak animation */
+@keyframes lightStreak {
+  0% {
+    transform: translateX(-400px) translate(-50%, -50%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(400px) translate(-50%, -50%);
+    opacity: 0;
+  }
+}
+
+.animate-light-streak {
+  animation: lightStreak 3s linear infinite;
+}
+
+.animate-light-streak-delay {
+  animation: lightStreak 3s linear infinite;
+  animation-delay: 1.5s;
+}
+
+/* Particle float animation */
+@keyframes particleFloat {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translate(30px, -50px) scale(0);
+    opacity: 0;
+  }
+}
+
+.animate-particle-float {
+  animation: particleFloat 4s ease-out infinite;
+}
+
+/* Scan vertical effect */
+@keyframes scanVertical {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.5;
+  }
+  80% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.animate-scan-vertical {
+  animation: scanVertical 4s linear infinite;
+}
+
+/* Cyan Glow Blink Effect - Prominent blinking */
+@keyframes cyanGlowFlicker {
+  0%,
+  100% {
+    opacity: 0.2;
+    filter: brightness(0.4);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.5);
+  }
+}
+
+.animate-cyan-glow-flicker {
+  animation: cyanGlowFlicker 1.5s ease-in-out infinite;
+}
+
+/* Secondary flicker layer for depth */
+@keyframes cyanGlowFlickerSecondary {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  25% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.55;
+  }
+  75% {
+    opacity: 0.4;
+  }
+}
+
+.animate-cyan-glow-flicker-secondary {
+  animation: cyanGlowFlickerSecondary 1.5s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+
+/* Outer glow pulse with flicker */
+@keyframes outerGlowPulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+.animate-outer-glow-pulse {
+  animation: outerGlowPulse 2s ease-in-out infinite;
 }

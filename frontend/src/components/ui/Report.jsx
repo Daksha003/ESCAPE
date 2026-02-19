@@ -9,6 +9,7 @@ import {
   Code,
   MessageSquare,
 } from "lucide-react";
+import CountUp from "./CountUp";
 
 const Report = ({ scores, onClose }) => {
   const { aptitude, coding, interview } = scores;
@@ -16,7 +17,7 @@ const Report = ({ scores, onClose }) => {
   const getOverallPerformance = () => {
     const aptitudeScore = aptitude.score || 0;
     const codingScore = coding.passed ? 100 : 0;
-    const interviewScore = (interview.score / interview.totalQuestions) * 100;
+    const interviewScore = interview.score || 0; // score is already a percentage
     const average = (aptitudeScore + codingScore + interviewScore) / 3;
 
     if (average >= 80)
@@ -63,7 +64,7 @@ const Report = ({ scores, onClose }) => {
         (answer.toLowerCase().includes("example") ||
           answer.toLowerCase().includes("experience") ||
           answer.toLowerCase().includes("project") ||
-          answer.toLowerCase().includes("worked on"))
+          answer.toLowerCase().includes("worked on")),
     );
 
     if (!hasExamples) {
@@ -88,7 +89,7 @@ const Report = ({ scores, onClose }) => {
           answer.toLowerCase().includes("passionate") ||
           answer.toLowerCase().includes("love") ||
           answer.toLowerCase().includes("enjoy") ||
-          answer.toLowerCase().includes("interested"))
+          answer.toLowerCase().includes("interested")),
     );
 
     if (!showsEnthusiasm) {
@@ -111,7 +112,7 @@ const Report = ({ scores, onClose }) => {
       .map((idx) => interview.answers?.[idx])
       .filter(Boolean);
     const detailedTechnical = technicalAnswers.filter(
-      (answer) => answer.length > 80
+      (answer) => answer.length > 80,
     );
 
     if (detailedTechnical.length < technicalAnswers.length) {
@@ -191,7 +192,11 @@ const Report = ({ scores, onClose }) => {
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-3xl font-bold text-blue-600">
-                    {aptitude.score?.toFixed(1)}%
+                    <CountUp
+                      value={aptitude.score || 0}
+                      decimals={1}
+                      suffix="%"
+                    />
                   </div>
                   <div className="text-gray-600">Score</div>
                 </div>
@@ -281,18 +286,15 @@ const Report = ({ scores, onClose }) => {
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-3xl font-bold text-purple-600">
-                    {Math.round(
-                      (interview.score / interview.totalQuestions) * 100
-                    )}
-                    %
+                    {interview.score}%
                   </div>
                   <div className="text-gray-600">Score</div>
                 </div>
                 <div className="text-right">
                   <div className="text-lg font-semibold">
-                    {interview.score}/{interview.totalQuestions}
+                    {interview.correct}/{interview.totalQuestions}
                   </div>
-                  <div className="text-gray-600">Good Responses</div>
+                  <div className="text-gray-600">Correct Answers</div>
                 </div>
                 <div className="flex items-center">
                   {interview.passed ? (

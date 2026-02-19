@@ -20,6 +20,11 @@ import {
   Loader2,
 } from "lucide-react";
 import useCountdownTimer from "../../hooks/useCountdownTimer";
+import TypingText from "./TypingText";
+
+const API_BASE = process.env.REACT_APP_API_BASE
+  ? process.env.REACT_APP_API_BASE.replace(/\/$/, "")
+  : "";
 
 const InterviewPanel = ({ onComplete }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -119,12 +124,12 @@ const InterviewPanel = ({ onComplete }) => {
         switch (event.error) {
           case "network":
             alert(
-              "Network error occurred during speech recognition. Please check your internet connection."
+              "Network error occurred during speech recognition. Please check your internet connection.",
             );
             break;
           case "not-allowed":
             alert(
-              "Microphone access denied. Please allow microphone access and try again."
+              "Microphone access denied. Please allow microphone access and try again.",
             );
             break;
           case "no-speech":
@@ -132,7 +137,7 @@ const InterviewPanel = ({ onComplete }) => {
             break;
           case "audio-capture":
             alert(
-              "No microphone was found. Please connect a microphone and try again."
+              "No microphone was found. Please connect a microphone and try again.",
             );
             break;
           default:
@@ -163,17 +168,20 @@ const InterviewPanel = ({ onComplete }) => {
     try {
       setIsGeneratingQuestion(true);
 
-      const response = await fetch("/api/generate-interview-question", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${API_BASE}/api/generate-interview-question`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            conversation_history: conversationHistory,
+            question_number: questionNumber,
+            interests: interests,
+          }),
         },
-        body: JSON.stringify({
-          conversation_history: conversationHistory,
-          question_number: questionNumber,
-          interests: interests,
-        }),
-      });
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -287,7 +295,7 @@ const InterviewPanel = ({ onComplete }) => {
 
     try {
       // Call the AI-powered interview analysis API
-      const response = await fetch("/api/analyze-interview", {
+      const response = await fetch(`${API_BASE}/api/analyze-interview`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -332,7 +340,7 @@ const InterviewPanel = ({ onComplete }) => {
       const mockAnalysis = generateInterviewAnalysis(
         interviewResults,
         answers,
-        dynamicQuestions
+        dynamicQuestions,
       );
 
       const resultsWithAnswers = {
@@ -354,7 +362,7 @@ const InterviewPanel = ({ onComplete }) => {
   const toggleSpeechRecognition = () => {
     if (!recognition) {
       alert(
-        "Speech recognition is not supported in your browser. Please use Chrome, Edge, or Safari for the best experience."
+        "Speech recognition is not supported in your browser. Please use Chrome, Edge, or Safari for the best experience.",
       );
       return;
     }
@@ -369,7 +377,7 @@ const InterviewPanel = ({ onComplete }) => {
       } catch (error) {
         console.error("Error starting speech recognition:", error);
         alert(
-          "Could not start speech recognition. Please ensure your microphone is connected and try again."
+          "Could not start speech recognition. Please ensure your microphone is connected and try again.",
         );
       }
     }
@@ -469,6 +477,14 @@ const InterviewPanel = ({ onComplete }) => {
 
   const renderQuestion = () => {
     const question = dynamicQuestions[currentQuestion];
+
+    if (!question) {
+      return (
+        <div className="text-center py-8">
+          <p className="text-slate-600">Loading question...</p>
+        </div>
+      );
+    }
 
     return (
       <div className="w-full h-full flex gap-6">
@@ -608,9 +624,11 @@ const InterviewPanel = ({ onComplete }) => {
                   </div>
                 </div>
               ) : (
-                <p className="text-slate-800 text-lg leading-relaxed">
-                  {question.question}
-                </p>
+                <TypingText
+                  text={question.question}
+                  speed={25}
+                  className="text-slate-800 text-lg leading-relaxed"
+                />
               )}
             </CardContent>
           </Card>
@@ -711,6 +729,11 @@ const InterviewPanel = ({ onComplete }) => {
                           <strong>Status:</strong>{" "}
                           {isListening ? "Listening..." : "Ready to record"}
                         </div>
+                        {isListening && interimText && (
+                          <div className="mt-2 p-2 bg-white border border-blue-300 rounded text-blue-800 text-xs">
+                            <strong>Interim:</strong> {interimText}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -800,9 +823,9 @@ const InterviewPanel = ({ onComplete }) => {
           <div className="space-y-4">
             <div className="text-center">
               <div className="text-3xl font-bold text-slate-800">
-                {results.score}/{results.totalQuestions}
+                {results.correct}/{results.totalQuestions}
               </div>
-              <div className="text-slate-600">Questions Answered Well</div>
+              <div className="text-slate-600">Correct Answers</div>
             </div>
 
             <div className="border-t pt-4">

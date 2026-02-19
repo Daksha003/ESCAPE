@@ -4,409 +4,353 @@ export const aptitudeQuestions = [
   {
     id: 1,
     question:
-      "If the selling price of 15 articles equals the cost price of 20 articles, find the gain %.",
-    options: ["25%", "30%", "33.33%", "35%"],
-    correctAnswer: 2,
+      "If the cost price of 40 articles is equal to the selling price of 30 articles, find the gain %.",
+    options: ["25%", "33.33%", "30%", "40%"],
+    correctAnswer: 1,
   },
   {
     id: 2,
     question:
-      "A train running at 60 km/hr crosses a pole in 9 seconds. Find its length.",
-    options: ["120 m", "150 m", "180 m", "200 m"],
-    correctAnswer: 1,
+      "A train 200 m long crosses a platform 150 m long in 15 sec. If its speed is 60 km/h, find the length of the platform.",
+    options: ["150 m", "180 m", "200 m", "250 m"],
+    correctAnswer: 0,
   },
   {
     id: 3,
     question:
-      "What is the simple interest on ₹10,000 at 12% per annum for 2 years?",
-    options: ["₹2200", "₹2400", "₹2500", "₹2600"],
+      "The compound interest on ₹5000 for 2 years at 10% per annum is ₹1050. Find the principal if interest is compounded half-yearly.",
+    options: ["₹5000", "₹4950", "₹4900", "₹5050"],
     correctAnswer: 1,
   },
   {
     id: 4,
-    question: "If A = 2 and B = 3, then (A³ + B³)/(A + B) = ?",
-    options: ["5", "6", "7", "8"],
+    question: "If x + y = 10 and xy = 21, find x² + y².",
+    options: ["49", "58", "61", "79"],
     correctAnswer: 2,
   },
   {
     id: 5,
     question:
-      "The sum of two numbers is 45 and their difference is 9. Find the larger number.",
-    options: ["18", "24", "27", "30"],
-    correctAnswer: 2,
+      "Two numbers are in the ratio 5:7 and their LCM is 420. Find the numbers.",
+    options: ["20, 28", "30, 42", "35, 49", "40, 56"],
+    correctAnswer: 1,
   },
   {
     id: 6,
-    question: "What is 20% of 25% of 400?",
-    options: ["15", "18", "20", "25"],
-    correctAnswer: 2,
+    question: "15% of a number is equal to 18. Find the number.",
+    options: ["100", "120", "110", "150"],
+    correctAnswer: 1,
   },
   {
     id: 7,
     question:
-      "A can finish work in 12 days, B in 18 days. Working together they complete it in:",
-    options: ["6 days", "7 days", "7.2 days", "8 days"],
-    correctAnswer: 2,
+      "A can do a work in 15 days, B in 20 days, and C in 30 days. How long will they take working together?",
+    options: ["6 days", "7 days", "8 days", "9 days"],
+    correctAnswer: 1,
   },
   {
     id: 8,
-    question: "HCF of 24, 36, and 60 is:",
-    options: ["6", "8", "10", "12"],
-    correctAnswer: 3,
+    question: "HCF of 90, 144, and 180 is:",
+    options: ["6", "12", "18", "24"],
+    correctAnswer: 1,
   },
   {
     id: 9,
     question:
-      "A person covers 60 km at 30 km/hr and returns at 20 km/hr. Find average speed.",
-    options: ["22 km/hr", "24 km/hr", "25 km/hr", "26 km/hr"],
-    correctAnswer: 1,
+      "A person travels 60 km at a speed of 40 km/hr and 60 km at 60 km/hr. Average speed = ?",
+    options: ["48 km/hr", "50 km/hr", "52 km/hr", "45 km/hr"],
+    correctAnswer: 0,
   },
   {
     id: 10,
     question:
-      "A man's age is 3 times his son's. After 10 years, he'll be twice his son's. Find father's age.",
-    options: ["25", "28", "30", "33"],
+      "A father is 4 times as old as his son. After 6 years, the father will be 3 times his son's age. Find the father's age.",
+    options: ["24", "28", "32", "36"],
     correctAnswer: 2,
   },
   {
     id: 11,
-    question: "If 4 pencils cost ₹20, cost of 10 pencils is:",
-    options: ["₹40", "₹45", "₹50", "₹55"],
-    correctAnswer: 2,
+    question:
+      "If 3 pens and 2 pencils cost ₹56 and 5 pens and 4 pencils cost ₹110, find the cost of 1 pen.",
+    options: ["₹10", "₹12", "₹14", "₹16"],
+    correctAnswer: 1,
   },
   {
     id: 12,
-    question: "Find the next term: 3, 9, 27, 81, ?",
-    options: ["121", "243", "162", "324"],
+    question: "Find the next term: 2, 6, 12, 20, 30, ?",
+    options: ["40", "42", "44", "46"],
     correctAnswer: 1,
   },
   {
     id: 13,
-    question: "Probability of picking a blue ball from 4 red, 5 blue, 3 green?",
-    options: ["1/3", "5/12", "1/4", "5/10"],
+    question:
+      "A bag contains 6 red, 4 blue, and 5 green balls. One ball is drawn at random. Probability it is neither red nor green?",
+    options: ["2/15", "4/15", "1/5", "3/15"],
     correctAnswer: 1,
   },
   {
     id: 14,
-    question: "Compound interest on ₹5000 at 10% for 2 years = ?",
-    options: ["₹1000", "₹1050", "₹1100", "₹1150"],
+    question: "CI on ₹2000 at 5% per annum for 2 years = ?",
+    options: ["₹200", "₹205", "₹210", "₹215"],
     correctAnswer: 1,
   },
   {
     id: 15,
     question:
-      "The ratio of two numbers is 3:4, their sum is 84. Smaller number = ?",
-    options: ["28", "32", "36", "40"],
+      "The ratio of ages of A and B is 7:9. After 5 years, sum of ages = 80. Find A's age.",
+    options: ["30", "32", "35", "36"],
     correctAnswer: 2,
   },
   {
     id: 16,
-    question: "Simplify: 2³ × 2⁴ / 2² = ?",
-    options: ["8", "16", "32", "64"],
+    question: "Simplify: (2⁴ × 4³) ÷ 8",
+    options: ["16", "32", "64", "128"],
     correctAnswer: 2,
   },
   {
     id: 17,
     question:
-      "8 workers complete a task in 6 days. 12 workers will complete it in:",
-    options: ["3 days", "4 days", "5 days", "6 days"],
-    correctAnswer: 1,
+      "10 men can complete a work in 12 days. How many days will 15 men take?",
+    options: ["6", "7", "8", "9"],
+    correctAnswer: 2,
   },
   {
     id: 18,
-    question: "Perimeter of square is 48 cm. Find area.",
-    options: ["120 cm²", "132 cm²", "144 cm²", "156 cm²"],
-    correctAnswer: 2,
+    question: "Area of a square whose diagonal = 10 cm?",
+    options: ["25 cm²", "50 cm²", "100 cm²", "75 cm²"],
+    correctAnswer: 1,
   },
   {
     id: 19,
-    question: "Find the next term: 7, 14, 28, 56, ?",
-    options: ["84", "98", "112", "120"],
-    correctAnswer: 2,
+    question: "Find the next term: 1, 2, 6, 24, 120, ?",
+    options: ["600", "720", "7200", "72000"],
+    correctAnswer: 1,
   },
   {
     id: 20,
-    question: "If cost price = ₹500 and profit = 25%, selling price = ?",
-    options: ["₹600", "₹625", "₹650", "₹700"],
+    question: "CP = ₹800, SP = ₹1000. Find profit %.",
+    options: ["20%", "25%", "22%", "30%"],
     correctAnswer: 1,
   },
   {
     id: 21,
-    question: "Find the odd one: 2, 6, 12, 20, 30, 42",
-    options: ["20", "30", "42", "12"],
-    correctAnswer: 1,
+    question: "Odd one: 16, 36, 64, 100, 120",
+    options: ["16", "36", "100", "120"],
+    correctAnswer: 3,
   },
   {
     id: 22,
-    question: "If CAT = 24, DOG = 26, then BAT = ?",
-    options: ["22", "23", "24", "25"],
-    correctAnswer: 1,
+    question: "If CAT = 24, DOG = 26, then PIG = ?",
+    options: ["28", "29", "30", "31"],
+    correctAnswer: 2,
   },
   {
     id: 23,
     question:
-      "Arrange logically: Doctor, Patient, Diagnosis, Medicine, Recovery",
+      "Arrange logically: Diagnosis, Doctor, Recovery, Patient, Medicine",
     options: [
-      "Patient–Doctor–Diagnosis–Medicine–Recovery",
-      "Doctor–Patient–Medicine–Diagnosis–Recovery",
-      "Diagnosis–Doctor–Patient–Medicine–Recovery",
-      "Doctor–Medicine–Patient–Recovery–Diagnosis",
+      "Doctor → Patient → Diagnosis → Medicine → Recovery",
+      "Patient → Diagnosis → Doctor → Medicine → Recovery",
+      "Doctor → Diagnosis → Patient → Medicine → Recovery",
+      "Patient → Doctor → Diagnosis → Recovery → Medicine",
     ],
     correctAnswer: 0,
   },
   {
     id: 24,
-    question: "If A+B=12 and A–B=4, find A.",
-    options: ["6", "7", "8", "9"],
+    question: "If x + y = 15 and x – y = 5, find xy.",
+    options: ["25", "40", "45", "50"],
     correctAnswer: 2,
   },
   {
     id: 25,
-    question: "If all roses are flowers and some flowers fade, conclusion?",
-    options: ["All roses fade", "Some roses fade", "No roses fade", "None"],
+    question: "If all roses are flowers and no flower is red, then?",
+    options: [
+      "All roses are red",
+      "No rose is red",
+      "Some roses are red",
+      "None",
+    ],
     correctAnswer: 1,
   },
   {
     id: 26,
-    question: "Series: 3, 6, 18, 72, 360, ?",
-    options: ["720", "1080", "1440", "2160"],
-    correctAnswer: 3,
+    question: "Series: 2, 6, 24, 120, ?",
+    options: ["720", "600", "7200", "840"],
+    correctAnswer: 0,
   },
   {
     id: 27,
     question:
-      "Statements: All cats are animals. Some animals are dogs. Conclusion: Some cats are dogs.",
+      "Statements: All birds can fly. Some parrots are birds. Conclusion: Some parrots can fly.",
     options: ["True", "False", "Can't say", "Both"],
-    correctAnswer: 1,
+    correctAnswer: 0,
   },
   {
     id: 28,
-    question: "Mirror of 2:30 = ?",
-    options: ["9:30", "10:30", "8:30", "11:30"],
+    question: "Mirror of 10:45?",
+    options: ["1:15", "1:30", "2:15", "2:30"],
     correctAnswer: 0,
   },
   {
     id: 29,
-    question: "If NORTH=45678, SOUTH=85678, find SNOTH.",
-    options: ["845678", "846578", "845768", "845687"],
-    correctAnswer: 0,
+    question: "If TABLE = 62543, CHAIR = 31425, then BAIL?",
+    options: ["2543", "5243", "2453", "4253"],
+    correctAnswer: 1,
   },
   {
     id: 30,
-    question: "If RAM=27, find RAVI. (R=18, A=1, V=22, I=9)",
-    options: ["48", "49", "50", "51"],
+    question: "RAM = 27, find RANI (R=18, A=1, N=14, I=9)?",
+    options: ["42", "44", "45", "46"],
     correctAnswer: 2,
   },
   {
     id: 31,
     question:
-      "Pointing to a man, Rina said, 'He is my father's only son.' Who is he to Rina?",
-    options: ["Father", "Brother", "Uncle", "Cousin"],
-    correctAnswer: 1,
+      "Pointing to a boy, she says, 'He is the son of my father's sister.' Who is he?",
+    options: ["Cousin", "Brother", "Nephew", "Uncle"],
+    correctAnswer: 0,
   },
   {
     id: 32,
-    question: "Series: A, C, F, J, O, ?",
-    options: ["S", "T", "U", "V"],
-    correctAnswer: 2,
+    question: "Series: 2, 5, 10, 17, 26, ?",
+    options: ["35", "37", "38", "40"],
+    correctAnswer: 1,
   },
   {
     id: 33,
-    question: "Two typists type 10 pages in 2 min. How many in 6 min?",
-    options: ["30", "40", "50", "60"],
-    correctAnswer: 3,
+    question:
+      "Two typists type 8 pages in 4 min. How many in 12 min by 3 typists?",
+    options: ["18", "24", "36", "48"],
+    correctAnswer: 2,
   },
   {
     id: 34,
-    question: "5 cats kill 5 rats in 5 min. 10 cats kill 10 rats in:",
-    options: ["2.5 min", "5 min", "10 min", "15 min"],
+    question: "6 cats kill 6 rats in 6 min. 9 cats kill 9 rats in?",
+    options: ["4 min", "6 min", "9 min", "12 min"],
     correctAnswer: 1,
   },
   {
     id: 35,
-    question: "Odd one: Mango, Banana, Apple, Carrot",
-    options: ["Mango", "Apple", "Carrot", "Banana"],
-    correctAnswer: 2,
+    question: "Odd one: Rose, Tulip, Lily, Mango",
+    options: ["Rose", "Tulip", "Lily", "Mango"],
+    correctAnswer: 3,
   },
   {
     id: 36,
-    question: "If 1=3, 2=3, 3=5, 4=4, 5=4, then 6=?",
-    options: ["3", "4", "5", "6"],
-    correctAnswer: 0,
+    question: "If 1=2, 2=3, 3=5, 4=7, 5=?",
+    options: ["7", "8", "9", "10"],
+    correctAnswer: 1,
   },
   {
     id: 37,
     question:
-      "If some pens are pencils and all pencils are erasers, all pens are erasers?",
+      "Some pencils are pens. Some pens are erasers. All pencils are erasers?",
     options: ["Yes", "No", "Possible", "None"],
     correctAnswer: 2,
   },
   {
     id: 38,
-    question:
-      "Ravi is older than Mohan but younger than Suresh. Who’s youngest?",
-    options: ["Ravi", "Mohan", "Suresh", "Can't say"],
-    correctAnswer: 1,
+    question: "Ravi > Mohan, Suresh > Ravi, Mohan > Ramesh. Who is youngest?",
+    options: ["Ramesh", "Mohan", "Ravi", "Suresh"],
+    correctAnswer: 0,
   },
   {
     id: 39,
-    question: "If code for 'APPLE' is 'EQQPI', code for 'MANGO'?",
-    options: ["QERKS", "QEPLS", "QERKT", "QERKS"],
+    question: "Code: APPLE → EQQPI. MANGO → ?",
+    options: ["QERKS", "QERKT", "QERKU", "QEPLS"],
     correctAnswer: 0,
   },
   {
     id: 40,
-    question: "Which number should replace question mark? 8, 16, 32, ?, 128",
-    options: ["48", "56", "64", "72"],
+    question: "Find missing: 5, 11, 23, 47, ?",
+    options: ["91", "95", "97", "99"],
     correctAnswer: 2,
   },
   {
     id: 41,
-    question: "Correct spelling:",
-    options: ["Accomodate", "Acommodate", "Accommodate", "Accomadate"],
-    correctAnswer: 2,
+    question: "Choose the correct synonym of 'Obfuscate':",
+    options: ["Clarify", "Confuse", "Simplify", "Enlighten"],
+    correctAnswer: 1,
   },
   {
     id: 42,
-    question: "Synonym of 'Benevolent':",
-    options: ["Kind", "Evil", "Selfish", "Greedy"],
-    correctAnswer: 0,
+    question: "Select the sentence with correct usage of the subjunctive mood:",
+    options: [
+      "If I was you, I would study more.",
+      "If I were you, I would study more.",
+      "If I am you, I would study more.",
+      "If I be you, I would study more.",
+    ],
+    correctAnswer: 1,
   },
   {
     id: 43,
-    question: "Antonym of 'Hostile':",
-    options: ["Angry", "Rude", "Friendly", "Cruel"],
-    correctAnswer: 2,
+    question:
+      "Fill in the blank with the most appropriate word: 'The committee reached a decision, but it was rather ___ and lacked clarity.'",
+    options: ["ambiguous", "succinct", "lucid", "cogent"],
+    correctAnswer: 0,
   },
   {
     id: 44,
-    question: "Fill in the blank: She is interested ___ painting.",
-    options: ["on", "of", "in", "with"],
-    correctAnswer: 2,
+    question:
+      "Identify the error in the sentence: 'Neither of the two candidates have shown their ability to lead effectively.'",
+    options: ["Neither", "have", "shown", "effectively"],
+    correctAnswer: 1,
   },
   {
     id: 45,
-    question: "Correct sentence:",
-    options: [
-      "He do not like mangoes.",
-      "He does not likes mangoes.",
-      "He does not like mangoes.",
-      "He not like mangoes.",
-    ],
-    correctAnswer: 2,
+    question: "Choose the correct antonym of 'Ubiquitous':",
+    options: ["Rare", "Omnipresent", "Common", "Pervasive"],
+    correctAnswer: 0,
   },
   {
     id: 46,
-    question: "Find error: 'Each of the boys have done their homework.'",
-    options: ["Each", "have", "their", "homework"],
-    correctAnswer: 1,
+    question:
+      "Select the correct idiom meaning: 'Throwing caution to the wind'",
+    options: [
+      "Acting recklessly",
+      "Being careful",
+      "Giving advice",
+      "Taking precautions",
+    ],
+    correctAnswer: 0,
   },
   {
     id: 47,
-    question: "Passive voice of 'They built a bridge.'",
+    question:
+      "Rearrange the sentence to form a grammatically correct one: 'Always / she / completes / assignments / on time / her'",
     options: [
-      "A bridge built by them.",
-      "A bridge was built by them.",
-      "They had built a bridge.",
-      "A bridge has built.",
+      "She always completes her assignments on time.",
+      "Always she completes on time her assignments.",
+      "Her she completes always assignments on time.",
+      "She completes always her on time assignments.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
   },
   {
     id: 48,
-    question: "Indirect speech: He said, 'I am tired.'",
-    options: [
-      "He said he is tired.",
-      "He said that he was tired.",
-      "He said that I was tired.",
-      "He told he tired.",
-    ],
-    correctAnswer: 1,
+    question:
+      "Choose the most appropriate word to complete the sentence: 'The CEO's speech was full of ___, but few concrete plans were mentioned.'",
+    options: ["platitude", "brevity", "clarity", "lucidity"],
+    correctAnswer: 0,
   },
   {
     id: 49,
-    question: "One word: 'A person who writes poems.'",
-    options: ["Novelist", "Poet", "Author", "Writer"],
+    question:
+      "Identify the correct form of the verb: 'If she ___ harder, she would have passed the exam with distinction.'",
+    options: ["studied", "had studied", "studies", "will study"],
     correctAnswer: 1,
   },
   {
     id: 50,
-    question: "Preposition: He is fond ___ music.",
-    options: ["at", "to", "of", "in"],
-    correctAnswer: 2,
-  },
-  {
-    id: 51,
-    question: "Opposite of 'Ancient':",
-    options: ["Antique", "Modern", "Old", "Medieval"],
-    correctAnswer: 1,
-  },
-  {
-    id: 52,
-    question: "Correct spelling:",
-    options: ["Embarass", "Embarrass", "Embaras", "Embaras"],
-    correctAnswer: 1,
-  },
-  {
-    id: 53,
-    question: "Fill in: She is the ___ of all her friends.",
-    options: ["tall", "taller", "tallest", "more tall"],
-    correctAnswer: 2,
-  },
-  {
-    id: 54,
-    question: "Synonym of 'Vanish':",
-    options: ["Hide", "Disappear", "Lose", "Cover"],
-    correctAnswer: 1,
-  },
-  {
-    id: 55,
-    question: "Antonym of 'Expand':",
-    options: ["Increase", "Extend", "Contract", "Stretch"],
-    correctAnswer: 2,
-  },
-  {
-    id: 56,
-    question: "Choose correct tense: By next year, I ___ my degree.",
+    question:
+      "Read the sentence and select the most suitable conclusion: 'All engineers are logical thinkers. Some logical thinkers are also creative.'",
     options: [
-      "complete",
-      "have completed",
-      "will complete",
-      "will have completed",
-    ],
-    correctAnswer: 3,
-  },
-  {
-    id: 57,
-    question: "Find error: 'He is senior than me.'",
-    options: ["is", "senior", "than", "me"],
-    correctAnswer: 2,
-  },
-  {
-    id: 58,
-    question: "Idiom 'Hit the sack' means:",
-    options: ["Start working", "Go to sleep", "Argue", "Pack things"],
-    correctAnswer: 1,
-  },
-  {
-    id: 59,
-    question: "Correct usage:",
-    options: [
-      "She sings good.",
-      "She sings well.",
-      "She good sings.",
-      "She sings nicely good.",
-    ],
-    correctAnswer: 1,
-  },
-  {
-    id: 60,
-    question: "Rearrange: 'holiday / spent / we / beach / the / on / the.'",
-    options: [
-      "We the beach spent on holiday.",
-      "We spent the holiday on the beach.",
-      "On the beach we the holiday spent.",
-      "The beach we spent on holiday.",
+      "All engineers are creative.",
+      "Some engineers may be creative.",
+      "No engineer is creative.",
+      "Some engineers are not logical.",
     ],
     correctAnswer: 1,
   },
@@ -893,366 +837,803 @@ export const detectInterests = (answers) => {
 export const generateDynamicQuestions = (interests) => {
   const questions = [];
 
-  // Frontend questions
-  if (interests.frontend > 0) {
-    questions.push({
-      id: 9,
-      question: "How would you optimize a slow-loading web page?",
-      type: "technical",
-      expectedKeywords: [
-        "images",
-        "caching",
-        "minification",
-        "cdn",
-        "lazy loading",
-        "webpack",
-        "bundle splitting",
-      ],
-    });
-    questions.push({
-      id: 14,
-      question: "Explain the difference between React state and props.",
-      type: "technical",
-      expectedKeywords: [
-        "state",
-        "props",
-        "mutable",
-        "immutable",
-        "parent",
-        "child",
-        "lifecycle",
-      ],
-    });
-  }
+  // Define question banks for each domain
+  const questionBanks = {
+    frontend: [
+      {
+        id: 101,
+        question: "How would you optimize a slow-loading web page?",
+        type: "technical",
+        expectedKeywords: [
+          "images",
+          "caching",
+          "minification",
+          "cdn",
+          "lazy loading",
+          "webpack",
+          "bundle splitting",
+        ],
+      },
+      {
+        id: 102,
+        question: "Explain the difference between React state and props.",
+        type: "technical",
+        expectedKeywords: [
+          "state",
+          "props",
+          "mutable",
+          "immutable",
+          "parent",
+          "child",
+          "lifecycle",
+        ],
+      },
+      {
+        id: 103,
+        question:
+          "What are the differences between inline, internal, and external CSS?",
+        type: "technical",
+        expectedKeywords: [
+          "inline",
+          "internal",
+          "external",
+          "specificity",
+          "stylesheets",
+          "maintainability",
+        ],
+      },
+      {
+        id: 104,
+        question: "How do you handle browser compatibility issues?",
+        type: "technical",
+        expectedKeywords: [
+          "polyfills",
+          "babel",
+          "autoprefixer",
+          "can i use",
+          "feature detection",
+          "graceful degradation",
+        ],
+      },
+      {
+        id: 105,
+        question:
+          "What is the Virtual DOM, and how does it improve performance in React?",
+        type: "technical",
+        expectedKeywords: [
+          "diffing",
+          "reconciliation",
+          "batching",
+          "jsx",
+          "render",
+          "updates",
+        ],
+      },
+      {
+        id: 106,
+        question:
+          "Tell me about a time you fixed a major frontend bug under pressure.",
+        type: "behavioral",
+        expectedKeywords: [
+          "debugging",
+          "pressure",
+          "problem-solving",
+          "teamwork",
+        ],
+      },
+    ],
+    backend: [
+      {
+        id: 201,
+        question:
+          "How do you handle database connections in a high-traffic application?",
+        type: "technical",
+        expectedKeywords: [
+          "connection pooling",
+          "scalability",
+          "performance",
+          "caching",
+          "load balancing",
+          "orm",
+        ],
+      },
+      {
+        id: 202,
+        question: "Explain RESTful API design principles.",
+        type: "technical",
+        expectedKeywords: [
+          "rest",
+          "http methods",
+          "stateless",
+          "resources",
+          "endpoints",
+          "json",
+        ],
+      },
+      {
+        id: 203,
+        question: "What are the differences between SQL and NoSQL databases?",
+        type: "technical",
+        expectedKeywords: [
+          "sql",
+          "nosql",
+          "relational",
+          "document",
+          "schema",
+          "scalability",
+          "flexibility",
+        ],
+      },
+      {
+        id: 204,
+        question:
+          "How do you implement authentication and authorization in a backend system?",
+        type: "technical",
+        expectedKeywords: [
+          "jwt",
+          "oauth",
+          "session",
+          "token",
+          "roles",
+          "permissions",
+          "security",
+        ],
+      },
+      {
+        id: 205,
+        question: "Explain caching strategies to improve backend performance.",
+        type: "technical",
+        expectedKeywords: [
+          "redis",
+          "memcached",
+          "in-memory",
+          "ttl",
+          "cache invalidation",
+          "performance",
+        ],
+      },
+      {
+        id: 206,
+        question:
+          "Describe a time when you optimized backend performance for scalability.",
+        type: "behavioral",
+        expectedKeywords: [
+          "optimization",
+          "bottleneck",
+          "database",
+          "scalability",
+          "teamwork",
+        ],
+      },
+    ],
+    dataScience: [
+      {
+        id: 301,
+        question:
+          "Explain the difference between supervised and unsupervised learning.",
+        type: "technical",
+        expectedKeywords: [
+          "labeled",
+          "unlabeled",
+          "classification",
+          "regression",
+          "clustering",
+          "prediction",
+          "training data",
+        ],
+      },
+      {
+        id: 302,
+        question: "How do you handle missing data in a dataset?",
+        type: "technical",
+        expectedKeywords: [
+          "imputation",
+          "deletion",
+          "mean",
+          "median",
+          "mode",
+          "interpolation",
+          "feature engineering",
+        ],
+      },
+      {
+        id: 303,
+        question: "What is feature engineering, and why is it important?",
+        type: "technical",
+        expectedKeywords: [
+          "features",
+          "transformation",
+          "selection",
+          "extraction",
+          "model performance",
+          "data preprocessing",
+        ],
+      },
+      {
+        id: 304,
+        question:
+          "Explain the difference between classification and regression problems.",
+        type: "technical",
+        expectedKeywords: [
+          "classification",
+          "regression",
+          "categorical",
+          "continuous",
+          "discrete",
+          "prediction",
+        ],
+      },
+      {
+        id: 305,
+        question:
+          "How do you evaluate the performance of a machine learning model?",
+        type: "technical",
+        expectedKeywords: [
+          "accuracy",
+          "precision",
+          "recall",
+          "f1-score",
+          "confusion matrix",
+          "cross-validation",
+        ],
+      },
+      {
+        id: 306,
+        question:
+          "Describe a project where you had to interpret complex data patterns for insights.",
+        type: "behavioral",
+        expectedKeywords: [
+          "data analysis",
+          "insight",
+          "storytelling",
+          "impact",
+        ],
+      },
+    ],
+    machineLearning: [
+      {
+        id: 401,
+        question:
+          "What are the differences between overfitting and underfitting?",
+        type: "technical",
+        expectedKeywords: [
+          "overfitting",
+          "underfitting",
+          "bias",
+          "variance",
+          "training accuracy",
+          "validation accuracy",
+          "generalization",
+        ],
+      },
+      {
+        id: 402,
+        question: "Explain the concept of gradient descent.",
+        type: "technical",
+        expectedKeywords: [
+          "optimization",
+          "loss function",
+          "learning rate",
+          "convergence",
+          "local minimum",
+          "global minimum",
+          "backpropagation",
+        ],
+      },
+      {
+        id: 403,
+        question: "What is regularization, and why is it used?",
+        type: "technical",
+        expectedKeywords: [
+          "regularization",
+          "l1",
+          "l2",
+          "ridge",
+          "lasso",
+          "overfitting",
+          "model complexity",
+        ],
+      },
+      {
+        id: 404,
+        question:
+          "Explain the difference between batch and stochastic gradient descent.",
+        type: "technical",
+        expectedKeywords: [
+          "batch",
+          "stochastic",
+          "mini-batch",
+          "convergence",
+          "computation",
+          "noise",
+        ],
+      },
+      {
+        id: 405,
+        question:
+          "How do you handle imbalanced datasets in classification problems?",
+        type: "technical",
+        expectedKeywords: [
+          "imbalanced",
+          "oversampling",
+          "undersampling",
+          "smote",
+          "class weights",
+          "precision",
+          "recall",
+        ],
+      },
+      {
+        id: 406,
+        question:
+          "Describe a time when you built or improved a machine learning model.",
+        type: "behavioral",
+        expectedKeywords: [
+          "model",
+          "training",
+          "testing",
+          "accuracy",
+          "iteration",
+        ],
+      },
+    ],
+    devops: [
+      {
+        id: 501,
+        question: "How do you implement CI/CD pipelines?",
+        type: "technical",
+        expectedKeywords: [
+          "continuous integration",
+          "continuous deployment",
+          "automation",
+          "testing",
+          "deployment",
+          "rollback",
+          "monitoring",
+        ],
+      },
+      {
+        id: 502,
+        question: "Explain container orchestration and its benefits.",
+        type: "technical",
+        expectedKeywords: [
+          "kubernetes",
+          "docker",
+          "scaling",
+          "load balancing",
+          "service discovery",
+          "self-healing",
+          "resource management",
+        ],
+      },
+      {
+        id: 503,
+        question:
+          "What are the differences between continuous integration, continuous delivery, and continuous deployment?",
+        type: "technical",
+        expectedKeywords: [
+          "ci",
+          "cd",
+          "automation",
+          "pipelines",
+          "release",
+          "manual",
+          "approval",
+        ],
+      },
+      {
+        id: 504,
+        question:
+          "How do you monitor and maintain application performance in production?",
+        type: "technical",
+        expectedKeywords: [
+          "apm",
+          "metrics",
+          "logs",
+          "traces",
+          "alerts",
+          "slo",
+          "observability",
+        ],
+      },
+      {
+        id: 505,
+        question: "Explain the role of infrastructure as code (IaC) in DevOps.",
+        type: "technical",
+        expectedKeywords: [
+          "terraform",
+          "cloudformation",
+          "ansible",
+          "repeatability",
+          "idempotent",
+          "version control",
+        ],
+      },
+      {
+        id: 506,
+        question:
+          "Describe a time you solved a major deployment failure quickly.",
+        type: "behavioral",
+        expectedKeywords: [
+          "incident",
+          "troubleshooting",
+          "rollback",
+          "team coordination",
+        ],
+      },
+    ],
+    mobile: [
+      {
+        id: 601,
+        question: "What are the key considerations for mobile app performance?",
+        type: "technical",
+        expectedKeywords: [
+          "battery",
+          "memory",
+          "network",
+          "ui responsiveness",
+          "offline storage",
+          "app size",
+          "cpu usage",
+        ],
+      },
+      {
+        id: 602,
+        question:
+          "How do you handle different screen sizes and orientations in mobile apps?",
+        type: "technical",
+        expectedKeywords: [
+          "responsive design",
+          "adaptive layout",
+          "constraints",
+          "media queries",
+          "orientation changes",
+          "pixel density",
+        ],
+      },
+      {
+        id: 603,
+        question:
+          "Explain the difference between native, hybrid, and cross-platform apps.",
+        type: "technical",
+        expectedKeywords: [
+          "native",
+          "hybrid",
+          "cross-platform",
+          "performance",
+          "development time",
+          "code sharing",
+        ],
+      },
+      {
+        id: 604,
+        question: "How do you optimize battery usage in mobile apps?",
+        type: "technical",
+        expectedKeywords: [
+          "battery",
+          "optimization",
+          "background tasks",
+          "location services",
+          "push notifications",
+          "efficient coding",
+        ],
+      },
+      {
+        id: 605,
+        question:
+          "What are best practices for offline support in mobile applications?",
+        type: "technical",
+        expectedKeywords: [
+          "offline",
+          "caching",
+          "sync",
+          "local storage",
+          "conflict resolution",
+          "user experience",
+        ],
+      },
+      {
+        id: 606,
+        question:
+          "Describe a mobile app you helped improve through testing and user feedback.",
+        type: "behavioral",
+        expectedKeywords: ["usability", "testing", "feedback", "iteration"],
+      },
+    ],
+    cybersecurity: [
+      {
+        id: 701,
+        question: "What are common web application security vulnerabilities?",
+        type: "technical",
+        expectedKeywords: [
+          "xss",
+          "csrf",
+          "sql injection",
+          "vulnerabilities",
+          "owasp",
+          "security",
+        ],
+      },
+      {
+        id: 702,
+        question: "How do you implement secure authentication?",
+        type: "technical",
+        expectedKeywords: [
+          "authentication",
+          "password",
+          "multi-factor",
+          "oauth",
+          "jwt",
+          "secure",
+        ],
+      },
+      {
+        id: 703,
+        question:
+          "Explain the differences between symmetric and asymmetric encryption.",
+        type: "technical",
+        expectedKeywords: [
+          "symmetric",
+          "asymmetric",
+          "encryption",
+          "key",
+          "rsa",
+          "aes",
+        ],
+      },
+      {
+        id: 704,
+        question: "How do you prevent SQL injection and XSS attacks?",
+        type: "technical",
+        expectedKeywords: [
+          "sql injection",
+          "xss",
+          "sanitization",
+          "prepared statements",
+          "validation",
+          "escaping",
+        ],
+      },
+      {
+        id: 705,
+        question:
+          "What is multi-factor authentication, and why is it important?",
+        type: "technical",
+        expectedKeywords: [
+          "mfa",
+          "authentication",
+          "security",
+          "factors",
+          "password",
+          "biometric",
+        ],
+      },
+      {
+        id: 706,
+        question:
+          "Tell me about a time you identified or mitigated a security risk.",
+        type: "behavioral",
+        expectedKeywords: ["risk", "prevention", "incident", "response"],
+      },
+    ],
+    blockchain: [
+      {
+        id: 801,
+        question:
+          "Explain the difference between public and private blockchains.",
+        type: "technical",
+        expectedKeywords: [
+          "public",
+          "private",
+          "blockchain",
+          "permissioned",
+          "permissionless",
+          "access",
+        ],
+      },
+      {
+        id: 802,
+        question: "What are smart contracts, and how do they work?",
+        type: "technical",
+        expectedKeywords: [
+          "smart contracts",
+          "ethereum",
+          "self-executing",
+          "conditions",
+          "automation",
+        ],
+      },
+      {
+        id: 803,
+        question: "How do consensus mechanisms like PoW and PoS work?",
+        type: "technical",
+        expectedKeywords: [
+          "consensus",
+          "pow",
+          "pos",
+          "mining",
+          "staking",
+          "validation",
+        ],
+      },
+      {
+        id: 804,
+        question:
+          "What are the advantages and limitations of blockchain technology?",
+        type: "technical",
+        expectedKeywords: [
+          "advantages",
+          "limitations",
+          "blockchain",
+          "decentralized",
+          "immutable",
+          "scalability",
+        ],
+      },
+      {
+        id: 805,
+        question: "Explain the concept of decentralization and its importance.",
+        type: "technical",
+        expectedKeywords: [
+          "decentralization",
+          "centralized",
+          "distributed",
+          "control",
+          "trust",
+        ],
+      },
+      {
+        id: 806,
+        question:
+          "Describe a blockchain project or concept that excites you the most.",
+        type: "behavioral",
+        expectedKeywords: ["innovation", "use case", "technology", "interest"],
+      },
+    ],
+    cloud: [
+      {
+        id: 901,
+        question:
+          "How do you choose between different cloud service models (IaaS, PaaS, SaaS)?",
+        type: "technical",
+        expectedKeywords: [
+          "iaas",
+          "paas",
+          "saas",
+          "infrastructure",
+          "platform",
+          "software",
+          "control",
+          "management",
+        ],
+      },
+      {
+        id: 902,
+        question: "Explain cloud security best practices.",
+        type: "technical",
+        expectedKeywords: [
+          "cloud security",
+          "encryption",
+          "access control",
+          "compliance",
+          "monitoring",
+          "best practices",
+        ],
+      },
+      {
+        id: 903,
+        question:
+          "What is auto-scaling, and how does it help in cloud applications?",
+        type: "technical",
+        expectedKeywords: [
+          "auto-scaling",
+          "elasticity",
+          "load",
+          "resources",
+          "cost",
+          "performance",
+        ],
+      },
+      {
+        id: 904,
+        question: "How do you manage cost optimization in cloud deployments?",
+        type: "technical",
+        expectedKeywords: [
+          "cost optimization",
+          "reserved instances",
+          "spot instances",
+          "monitoring",
+          "rightsizing",
+        ],
+      },
+      {
+        id: 905,
+        question:
+          "Explain the differences between public, private, and hybrid clouds.",
+        type: "technical",
+        expectedKeywords: [
+          "public",
+          "private",
+          "hybrid",
+          "cloud",
+          "security",
+          "control",
+          "scalability",
+        ],
+      },
+      {
+        id: 906,
+        question:
+          "Tell me about a time you migrated a service or application to the cloud.",
+        type: "behavioral",
+        expectedKeywords: ["migration", "deployment", "AWS", "Azure", "GCP"],
+      },
+    ],
+  };
 
-  // Backend questions
-  if (interests.backend > 0) {
-    questions.push({
-      id: 10,
-      question:
-        "How do you handle database connections in a high-traffic application?",
-      type: "technical",
-      expectedKeywords: [
-        "connection pooling",
-        "scalability",
-        "performance",
-        "caching",
-        "load balancing",
-        "orm",
-      ],
-    });
-    questions.push({
-      id: 15,
-      question: "Explain RESTful API design principles.",
-      type: "technical",
-      expectedKeywords: [
-        "rest",
-        "http methods",
-        "stateless",
-        "resources",
-        "endpoints",
-        "json",
-      ],
-    });
-  }
+  // Collect all relevant questions based on interests
+  const relevantQuestions = [];
+  Object.keys(interests).forEach((domain) => {
+    if (interests[domain] > 0 && questionBanks[domain]) {
+      relevantQuestions.push(...questionBanks[domain]);
+    }
+  });
 
-  // Fullstack questions
-  if (interests.fullstack > 0) {
-    questions.push({
-      id: 16,
-      question:
-        "How do you ensure data consistency between frontend and backend?",
-      type: "technical",
-      expectedKeywords: [
-        "validation",
-        "sanitization",
-        "api contracts",
-        "error handling",
-        "data types",
-        "serialization",
-      ],
-    });
-  }
-
-  // Data Science questions
-  if (interests.dataScience > 0) {
-    questions.push({
-      id: 17,
-      question:
-        "Explain the difference between supervised and unsupervised learning.",
-      type: "technical",
-      expectedKeywords: [
-        "labeled",
-        "unlabeled",
-        "classification",
-        "regression",
-        "clustering",
-        "prediction",
-        "training data",
-      ],
-    });
-    questions.push({
-      id: 18,
-      question: "How do you handle missing data in a dataset?",
-      type: "technical",
-      expectedKeywords: [
-        "imputation",
-        "deletion",
-        "mean",
-        "median",
-        "mode",
-        "interpolation",
-        "feature engineering",
-      ],
-    });
-  }
-
-  // Machine Learning questions
-  if (interests.machineLearning > 0) {
-    questions.push({
-      id: 19,
-      question:
-        "What are the differences between overfitting and underfitting?",
-      type: "technical",
-      expectedKeywords: [
-        "overfitting",
-        "underfitting",
-        "bias",
-        "variance",
-        "training accuracy",
-        "validation accuracy",
-        "generalization",
-      ],
-    });
-    questions.push({
-      id: 20,
-      question: "Explain the concept of gradient descent.",
-      type: "technical",
-      expectedKeywords: [
-        "optimization",
-        "loss function",
-        "learning rate",
-        "convergence",
-        "local minimum",
-        "global minimum",
-        "backpropagation",
-      ],
-    });
-  }
-
-  // DevOps questions
-  if (interests.devops > 0) {
-    questions.push({
-      id: 21,
-      question: "How do you implement CI/CD pipelines?",
-      type: "technical",
-      expectedKeywords: [
-        "continuous integration",
-        "continuous deployment",
-        "automation",
-        "testing",
-        "deployment",
-        "rollback",
-        "monitoring",
-      ],
-    });
-    questions.push({
-      id: 22,
-      question: "Explain container orchestration and its benefits.",
-      type: "technical",
-      expectedKeywords: [
-        "kubernetes",
-        "docker",
-        "scaling",
-        "load balancing",
-        "service discovery",
-        "self-healing",
-        "resource management",
-      ],
-    });
-  }
-
-  // Mobile questions
-  if (interests.mobile > 0) {
-    questions.push({
-      id: 23,
-      question: "What are the key considerations for mobile app performance?",
-      type: "technical",
-      expectedKeywords: [
-        "battery",
-        "memory",
-        "network",
-        "ui responsiveness",
-        "offline storage",
-        "app size",
-        "cpu usage",
-      ],
-    });
-    questions.push({
-      id: 24,
-      question:
-        "How do you handle different screen sizes and orientations in mobile apps?",
-      type: "technical",
-      expectedKeywords: [
-        "responsive design",
-        "adaptive layout",
-        "constraints",
-        "media queries",
-        "orientation changes",
-        "pixel density",
-      ],
-    });
-  }
-
-  // Cybersecurity questions
-  if (interests.cybersecurity > 0) {
-    questions.push({
-      id: 25,
-      question: "What are common web application security vulnerabilities?",
-      type: "technical",
-      expectedKeywords: [
-        "sql injection",
-        "xss",
-        "csrf",
-        "authentication",
-        "authorization",
-        "encryption",
-        "input validation",
-      ],
-    });
-    questions.push({
-      id: 26,
-      question: "How do you implement secure authentication?",
-      type: "technical",
-      expectedKeywords: [
-        "oauth",
-        "jwt",
-        "password hashing",
-        "salt",
-        "session management",
-        "multi-factor authentication",
-        "ssl/tls",
-      ],
-    });
-  }
-
-  // Blockchain questions
-  if (interests.blockchain > 0) {
-    questions.push({
-      id: 27,
-      question:
-        "Explain the difference between public and private blockchains.",
-      type: "technical",
-      expectedKeywords: [
-        "public",
-        "private",
-        "permissioned",
-        "permissionless",
-        "consensus",
-        "participants",
-        "ethereum",
-        "hyperledger",
-      ],
-    });
-    questions.push({
-      id: 28,
-      question: "What are smart contracts and how do they work?",
-      type: "technical",
-      expectedKeywords: [
-        "smart contracts",
-        "self-executing",
-        "blockchain",
-        "ethereum",
-        "solidity",
-        "automated",
-        "trustless",
-      ],
-    });
-  }
-
-  // Cloud questions
-  if (interests.cloud > 0) {
-    questions.push({
-      id: 29,
-      question: "How do you choose between different cloud service models?",
-      type: "technical",
-      expectedKeywords: [
-        "iaas",
-        "paas",
-        "saas",
-        "serverless",
-        "scalability",
-        "cost",
-        "control",
-        "maintenance",
-      ],
-    });
-    questions.push({
-      id: 30,
-      question: "Explain cloud security best practices.",
-      type: "technical",
-      expectedKeywords: [
-        "encryption",
-        "access control",
-        "monitoring",
-        "compliance",
-        "data protection",
-        "network security",
-        "identity management",
-      ],
-    });
-  }
-
-  // If no interests detected, add default questions to ensure we have enough questions
-  if (questions.length === 0) {
-    // Add some default questions from the interviewQuestions array (excluding the first one)
+  // If no interests detected, use default questions
+  if (relevantQuestions.length === 0) {
     questions.push(
       interviewQuestions[1], // Programming languages proficiency
       interviewQuestions[2], // OOP vs Functional programming
       interviewQuestions[3], // Challenging project experience
       interviewQuestions[4], // Debugging approach
       interviewQuestions[5], // Staying updated with technology
-      interviewQuestions[6] // Time/Space complexity
+      interviewQuestions[6], // Time/Space complexity
     );
+  } else {
+    // Select 2 questions from each relevant domain
+    Object.keys(interests).forEach((domain) => {
+      if (interests[domain] > 0 && questionBanks[domain]) {
+        const domainQuestions = questionBanks[domain];
+        const shuffled = domainQuestions.sort(() => 0.5 - Math.random());
+        questions.push(...shuffled.slice(0, 2));
+      }
+    });
   }
 
   return questions;
 };
 
-export const evaluateInterviewAnswers = (answers) => {
-  let score = 0;
+export const evaluateInterviewAnswers = (
+  answers,
+  questions = interviewQuestions,
+) => {
+  let correct = 0;
   const totalQuestions = answers.length;
 
   answers.forEach((answer, index) => {
     if (!answer || answer.trim().length === 0) return;
 
-    const question = interviewQuestions[index] || {};
-    const answerLength = answer.length;
+    const question = questions[index] || {};
     const hasKeywords = question.expectedKeywords
       ? question.expectedKeywords.some((keyword) =>
-          answer.toLowerCase().includes(keyword.toLowerCase())
+          answer.toLowerCase().includes(keyword.toLowerCase()),
         )
       : false;
 
-    // Scoring based on length and keyword presence
-    if (answerLength > 100 && hasKeywords) {
-      score += 3; // Excellent answer
-    } else if (answerLength > 50 && hasKeywords) {
-      score += 2; // Good answer
-    } else if (answerLength > 20) {
-      score += 1; // Basic answer
+    // Each correct answer (containing at least one keyword) gets 1 mark
+    if (hasKeywords) {
+      correct += 1;
     }
-    // 0 for poor answers
+    // 0 for answers without keywords or empty answers
   });
 
-  const maxPossibleScore = totalQuestions * 3;
-  const percentage =
-    maxPossibleScore > 0 ? (score / maxPossibleScore) * 100 : 0;
+  // Calculate percentage based on correct answers out of total questions
+  const percentage = totalQuestions > 0 ? (correct / totalQuestions) * 100 : 0;
   const passed = percentage >= 60;
 
   return {
     score: Math.round(percentage),
-    correct: score,
+    correct: correct,
     totalQuestions,
     passed,
   };
@@ -1270,7 +1651,7 @@ export const generateAptitudeAnalysis = (result, questions, answers) => {
   // Check if questions and answers are provided
   if (!questions || !answers) {
     analysis.recommendations.push(
-      "Unable to analyze aptitude performance - test data not available"
+      "Unable to analyze aptitude performance - test data not available",
     );
     return analysis;
   }
@@ -1331,7 +1712,7 @@ export const generateAptitudeAnalysis = (result, questions, answers) => {
   if (score < 60) {
     analysis.recommendations.push("Practice more aptitude questions daily");
     analysis.recommendations.push(
-      "Focus on understanding basic concepts before attempting questions"
+      "Focus on understanding basic concepts before attempting questions",
     );
   } else if (score < 80) {
     analysis.recommendations.push("Work on time management during tests");
@@ -1355,7 +1736,7 @@ export const generateCodingAnalysis = (result, language, code) => {
 
   if (passed) {
     analysis.strengths.push(
-      `Good understanding of ${language} syntax and structure`
+      `Good understanding of ${language} syntax and structure`,
     );
     analysis.strengths.push("Able to implement algorithmic logic correctly");
 
@@ -1372,7 +1753,7 @@ export const generateCodingAnalysis = (result, language, code) => {
     }
 
     analysis.recommendations.push(
-      "Continue practicing different problem types"
+      "Continue practicing different problem types",
     );
     analysis.recommendations.push("Try implementing more complex algorithms");
   } else {
@@ -1391,11 +1772,11 @@ export const generateCodingAnalysis = (result, language, code) => {
     }
 
     analysis.recommendations.push(
-      "Review basic syntax and structure for the chosen language"
+      "Review basic syntax and structure for the chosen language",
     );
     analysis.recommendations.push("Practice with simpler problems first");
     analysis.recommendations.push(
-      "Use debugging tools to understand code flow"
+      "Use debugging tools to understand code flow",
     );
   }
 
@@ -1405,7 +1786,7 @@ export const generateCodingAnalysis = (result, language, code) => {
 export const generateInterviewAnalysis = (
   result,
   answers,
-  questions = interviewQuestions
+  questions = interviewQuestions,
 ) => {
   const { score, totalQuestions, passed } = result;
 
@@ -1444,22 +1825,22 @@ export const generateInterviewAnalysis = (
     const answerLength = answer.length;
     const hasKeywords = question.expectedKeywords
       ? question.expectedKeywords.some((keyword) =>
-          answer.toLowerCase().includes(keyword.toLowerCase())
+          answer.toLowerCase().includes(keyword.toLowerCase()),
         )
       : false;
 
     // Communication analysis
     if (answerLength > 100) {
       analysis.communicationSkills.push(
-        `Question ${index + 1}: Detailed and comprehensive response`
+        `Question ${index + 1}: Detailed and comprehensive response`,
       );
     } else if (answerLength > 50) {
       analysis.communicationSkills.push(
-        `Question ${index + 1}: Good response length`
+        `Question ${index + 1}: Good response length`,
       );
     } else {
       analysis.weaknesses.push(
-        `Question ${index + 1}: Response could be more detailed`
+        `Question ${index + 1}: Response could be more detailed`,
       );
     }
 
@@ -1467,15 +1848,15 @@ export const generateInterviewAnalysis = (
     if (question.type === "technical") {
       if (hasKeywords && answerLength > 80) {
         analysis.technicalDepth.push(
-          `Question ${index + 1}: Strong technical explanation`
+          `Question ${index + 1}: Strong technical explanation`,
         );
       } else if (hasKeywords) {
         analysis.technicalDepth.push(
-          `Question ${index + 1}: Basic technical understanding`
+          `Question ${index + 1}: Basic technical understanding`,
         );
       } else {
         analysis.technicalDepth.push(
-          `Question ${index + 1}: Needs more technical depth`
+          `Question ${index + 1}: Needs more technical depth`,
         );
       }
     }
@@ -1487,11 +1868,11 @@ export const generateInterviewAnalysis = (
     answers.length;
   if (avgAnswerLength > 80) {
     analysis.strengths.push(
-      "Good communication skills with detailed responses"
+      "Good communication skills with detailed responses",
     );
   } else if (avgAnswerLength < 40) {
     analysis.weaknesses.push(
-      "Responses are too brief - expand on your answers"
+      "Responses are too brief - expand on your answers",
     );
   }
 
@@ -1503,24 +1884,24 @@ export const generateInterviewAnalysis = (
       answer &&
       question.expectedKeywords &&
       question.expectedKeywords.some((keyword) =>
-        answer.toLowerCase().includes(keyword.toLowerCase())
+        answer.toLowerCase().includes(keyword.toLowerCase()),
       )
     );
   }).length;
 
   const totalTechnical = questions.filter(
-    (q) => q && q.type === "technical"
+    (q) => q && q.type === "technical",
   ).length;
   const technicalPercentage =
     totalTechnical > 0 ? (technicalScore / totalTechnical) * 100 : 0;
 
   if (technicalPercentage >= 75) {
     analysis.strengths.push(
-      "Strong technical knowledge and explanation skills"
+      "Strong technical knowledge and explanation skills",
     );
   } else if (technicalPercentage < 50) {
     analysis.weaknesses.push(
-      "Technical explanations need more depth and accuracy"
+      "Technical explanations need more depth and accuracy",
     );
   }
 
@@ -1615,8 +1996,8 @@ export const generateComprehensiveAnalysis = (scores, testData = {}) => {
       completedTests.length === 0
         ? "Start with the aptitude test to begin your placement preparation."
         : completedTests.length === 1
-        ? "Continue with the remaining tests to get a complete assessment."
-        : "Complete the final test for comprehensive feedback."
+          ? "Continue with the remaining tests to get a complete assessment."
+          : "Complete the final test for comprehensive feedback."
     }`;
   }
 
@@ -1631,8 +2012,8 @@ export const generateComprehensiveAnalysis = (scores, testData = {}) => {
         aptitudeScore >= 80
           ? "Excellent analytical skills"
           : aptitudeScore >= 60
-          ? "Good foundation"
-          : "Needs improvement",
+            ? "Good foundation"
+            : "Needs improvement",
     });
   }
 
@@ -1659,99 +2040,102 @@ export const generateComprehensiveAnalysis = (scores, testData = {}) => {
         interviewScore >= 80
           ? "Strong communication skills"
           : interviewScore >= 60
-          ? "Good responses"
-          : "Needs more detail",
+            ? "Good responses"
+            : "Needs more detail",
     });
   }
 
-  // Generate detailed analysis for each completed test
-  if (scores.aptitude !== null && testData.aptitude) {
-    const aptitudeAnalysis = generateAptitudeAnalysis(
-      scores.aptitude,
-      testData.aptitude.questions,
-      testData.aptitude.answers
-    );
-    analysis.strengths.push(...aptitudeAnalysis.strengths);
-    analysis.weaknesses.push(...aptitudeAnalysis.weaknesses);
-  }
+  // Generate detailed analysis only when all tests are completed and at least one test was failed
+  const allTestsCompleted = completedTests.length === 3;
+  const allTestsPassed = overallPercentage >= 60; // Assuming 60% is passing threshold
 
-  if (scores.coding !== null && testData.coding) {
-    const codingAnalysis = generateCodingAnalysis(
-      scores.coding,
-      testData.coding.language,
-      testData.coding.code
-    );
-    analysis.strengths.push(...codingAnalysis.strengths);
-    analysis.weaknesses.push(...codingAnalysis.weaknesses);
-  }
-
-  if (scores.interview !== null && testData.interview) {
-    const interviewAnalysis = generateInterviewAnalysis(
-      scores.interview,
-      testData.interview.answers
-    );
-    analysis.strengths.push(...interviewAnalysis.strengths);
-    analysis.weaknesses.push(...interviewAnalysis.weaknesses);
-  }
-
-  // AI Insights based on overall performance
-  if (completedTests.length === 3) {
-    if (overallPercentage >= 80) {
-      analysis.aiInsights =
-        "You have excellent placement potential! Your comprehensive skill set across all areas makes you a strong candidate for technical roles.";
-    } else if (overallPercentage >= 60) {
-      analysis.aiInsights =
-        "Good overall performance with balanced skills. Focus on weak areas to become a well-rounded candidate.";
-    } else {
-      analysis.aiInsights =
-        "Significant improvement needed across multiple areas. Create a structured study plan focusing on fundamentals.";
+  if (allTestsCompleted && !allTestsPassed) {
+    // Generate detailed analysis only when all tests completed and failed at least one
+    if (scores.aptitude !== null && testData.aptitude) {
+      const aptitudeAnalysis = generateAptitudeAnalysis(
+        scores.aptitude,
+        testData.aptitude.questions,
+        testData.aptitude.answers,
+      );
+      analysis.strengths.push(...aptitudeAnalysis.strengths);
+      analysis.weaknesses.push(...aptitudeAnalysis.weaknesses);
+      analysis.recommendations.push(...aptitudeAnalysis.recommendations);
     }
+
+    if (scores.coding !== null && testData.coding) {
+      const codingAnalysis = generateCodingAnalysis(
+        scores.coding,
+        testData.coding.language,
+        testData.coding.code,
+      );
+      analysis.strengths.push(...codingAnalysis.strengths);
+      analysis.weaknesses.push(...codingAnalysis.weaknesses);
+      analysis.recommendations.push(...codingAnalysis.recommendations);
+    }
+
+    if (scores.interview !== null && testData.interview) {
+      const interviewAnalysis = generateInterviewAnalysis(
+        scores.interview,
+        testData.interview.answers,
+      );
+      analysis.strengths.push(...interviewAnalysis.strengths);
+      analysis.weaknesses.push(...interviewAnalysis.weaknesses);
+      analysis.recommendations.push(...interviewAnalysis.recommendations);
+      analysis.nextSteps.push(...interviewAnalysis.nextSteps);
+    }
+
+    // AI Insights for failed tests
+    analysis.aiInsights =
+      "Significant improvement needed across multiple areas. Create a structured study plan focusing on fundamentals.";
+
+    // Additional recommendations for failed tests
+    if (analysis.weaknesses.length > 0) {
+      analysis.recommendations.unshift(
+        `Address weaknesses in: ${analysis.weaknesses.slice(0, 3).join(", ")}`,
+      );
+    }
+
+    analysis.recommendations.push(
+      "Focus on building fundamental concepts through structured learning and practice",
+    );
+    analysis.recommendations.push(
+      "Consider online courses or bootcamps for weak areas",
+    );
+
+    // Next steps for failed tests
+    analysis.nextSteps = [
+      "Review detailed feedback for each completed test",
+      "Practice consistently in weak areas identified",
+      "Take mock tests to improve speed and accuracy",
+      "Build projects to demonstrate practical skills",
+    ];
+  } else if (allTestsCompleted && allTestsPassed) {
+    // All tests passed - minimal analysis with congratulations
+    analysis.aiInsights =
+      "Congratulations! You have excellent placement potential! Your comprehensive skill set across all areas makes you a strong candidate for technical roles.";
+    analysis.recommendations = [
+      "Practice with real-world projects to apply your knowledge",
+      "Prepare for company-specific interviews and coding challenges",
+      "Maintain consistent practice to stay sharp",
+    ];
+    analysis.nextSteps = [
+      "Apply for job opportunities that match your skills",
+      "Prepare for technical interviews with real companies",
+      "Continue learning and staying updated with industry trends",
+    ];
   } else {
+    // Partial completion - standard partial analysis
+    // AI Insights for partial completion
     analysis.aiInsights = `Analysis based on ${
       completedTests.length
     } completed test${
       completedTests.length !== 1 ? "s" : ""
     }. Complete all tests for comprehensive feedback.`;
-  }
 
-  // Recommendations based on performance
-  if (analysis.weaknesses.length > 0) {
     analysis.recommendations.push(
-      `Address weaknesses in: ${analysis.weaknesses.slice(0, 3).join(", ")}`
+      "Complete all remaining tests for a full assessment of your placement readiness",
     );
-  }
 
-  if (completedTests.length < 3) {
-    analysis.recommendations.push(
-      "Complete all remaining tests for a full assessment of your placement readiness"
-    );
-  }
-
-  if (overallPercentage < 60) {
-    analysis.recommendations.push(
-      "Focus on building fundamental concepts through structured learning and practice"
-    );
-    analysis.recommendations.push(
-      "Consider online courses or bootcamps for weak areas"
-    );
-  } else {
-    analysis.recommendations.push(
-      "Practice with real-world projects to apply your knowledge"
-    );
-    analysis.recommendations.push(
-      "Prepare for company-specific interviews and coding challenges"
-    );
-  }
-
-  // Next steps
-  analysis.nextSteps = [
-    "Review detailed feedback for each completed test",
-    "Practice consistently in weak areas identified",
-    "Take mock tests to improve speed and accuracy",
-    "Build projects to demonstrate practical skills",
-  ];
-
-  if (completedTests.length < 3) {
     analysis.nextSteps.unshift("Complete remaining placement tests");
   }
 

@@ -172,67 +172,103 @@ async def generate_fallback_question(question_number: int, interests: Optional[d
         if interests:
             domain_questions = []
 
-            # Frontend questions
+            # Frontend questions (6)
             if interests.get('frontend', 0) > 0:
                 domain_questions.extend([
                     {"question": "How would you optimize a slow-loading web page?", "type": "technical"},
-                    {"question": "Explain the difference between React state and props.", "type": "technical"}
+                    {"question": "Explain the difference between React state and props.", "type": "technical"},
+                    {"question": "What are the differences between inline, internal, and external CSS?", "type": "technical"},
+                    {"question": "How do you handle browser compatibility issues?", "type": "technical"},
+                    {"question": "What is the Virtual DOM, and how does it improve performance in React?", "type": "technical"},
+                    {"question": "Explain the difference between client-side and server-side rendering.", "type": "technical"},
                 ])
 
-            # Backend questions
+            # Backend questions (6)
             if interests.get('backend', 0) > 0:
                 domain_questions.extend([
                     {"question": "How do you handle database connections in a high-traffic application?", "type": "technical"},
-                    {"question": "Explain RESTful API design principles.", "type": "technical"}
+                    {"question": "Explain RESTful API design principles.", "type": "technical"},
+                    {"question": "What are the differences between SQL and NoSQL databases?", "type": "technical"},
+                    {"question": "How do you implement authentication and authorization in a backend system?", "type": "technical"},
+                    {"question": "Explain caching strategies to improve backend performance.", "type": "technical"},
+                    {"question": "How do you handle error logging and monitoring in backend services?", "type": "technical"},
                 ])
 
-            # Data Science questions
+            # Data Science questions (6)
             if interests.get('dataScience', 0) > 0:
                 domain_questions.extend([
                     {"question": "Explain the difference between supervised and unsupervised learning.", "type": "technical"},
-                    {"question": "How do you handle missing data in a dataset?", "type": "technical"}
+                    {"question": "How do you handle missing data in a dataset?", "type": "technical"},
+                    {"question": "What is feature engineering, and why is it important?", "type": "technical"},
+                    {"question": "Explain the difference between classification and regression problems.", "type": "technical"},
+                    {"question": "How do you evaluate the performance of a machine learning model?", "type": "technical"},
+                    {"question": "Explain the bias-variance tradeoff.", "type": "technical"},
                 ])
 
-            # Machine Learning questions
+            # Machine Learning questions (6)
             if interests.get('machineLearning', 0) > 0:
                 domain_questions.extend([
                     {"question": "What are the differences between overfitting and underfitting?", "type": "technical"},
-                    {"question": "Explain the concept of gradient descent.", "type": "technical"}
+                    {"question": "Explain the concept of gradient descent.", "type": "technical"},
+                    {"question": "What is regularization, and why is it used?", "type": "technical"},
+                    {"question": "Explain the difference between batch and stochastic gradient descent.", "type": "technical"},
+                    {"question": "How do you handle imbalanced datasets in classification problems?", "type": "technical"},
+                    {"question": "What are ensemble learning methods, and why are they useful?", "type": "technical"},
                 ])
 
-            # DevOps questions
+            # DevOps questions (6)
             if interests.get('devops', 0) > 0:
                 domain_questions.extend([
                     {"question": "How do you implement CI/CD pipelines?", "type": "technical"},
-                    {"question": "Explain container orchestration and its benefits.", "type": "technical"}
+                    {"question": "Explain container orchestration and its benefits.", "type": "technical"},
+                    {"question": "What are the differences between continuous integration, continuous delivery, and continuous deployment?", "type": "technical"},
+                    {"question": "How do you monitor and maintain application performance in production?", "type": "technical"},
+                    {"question": "Explain the role of infrastructure as code (IaC) in DevOps.", "type": "technical"},
+                    {"question": "How do you manage version control in a collaborative environment?", "type": "technical"},
                 ])
 
-            # Mobile questions
+            # Mobile questions (6)
             if interests.get('mobile', 0) > 0:
                 domain_questions.extend([
                     {"question": "What are the key considerations for mobile app performance?", "type": "technical"},
-                    {"question": "How do you handle different screen sizes and orientations in mobile apps?", "type": "technical"}
+                    {"question": "How do you handle different screen sizes and orientations in mobile apps?", "type": "technical"},
+                    {"question": "Explain the difference between native, hybrid, and cross-platform apps.", "type": "technical"},
+                    {"question": "How do you optimize battery usage in mobile apps?", "type": "technical"},
+                    {"question": "What are best practices for offline support in mobile applications?", "type": "technical"},
+                    {"question": "How do you handle app security and data privacy?", "type": "technical"},
                 ])
 
-            # Cybersecurity questions
+            # Cybersecurity questions (6)
             if interests.get('cybersecurity', 0) > 0:
                 domain_questions.extend([
                     {"question": "What are common web application security vulnerabilities?", "type": "technical"},
-                    {"question": "How do you implement secure authentication?", "type": "technical"}
+                    {"question": "How do you implement secure authentication?", "type": "technical"},
+                    {"question": "Explain the differences between symmetric and asymmetric encryption.", "type": "technical"},
+                    {"question": "How do you prevent SQL injection and XSS attacks?", "type": "technical"},
+                    {"question": "What is multi-factor authentication, and why is it important?", "type": "technical"},
+                    {"question": "How do you conduct security audits and vulnerability assessments?", "type": "technical"},
                 ])
 
-            # Blockchain questions
+            # Blockchain questions (6)
             if interests.get('blockchain', 0) > 0:
                 domain_questions.extend([
                     {"question": "Explain the difference between public and private blockchains.", "type": "technical"},
-                    {"question": "What are smart contracts and how do they work?", "type": "technical"}
+                    {"question": "What are smart contracts and how do they work?", "type": "technical"},
+                    {"question": "How do consensus mechanisms like PoW and PoS work?", "type": "technical"},
+                    {"question": "What are the advantages and limitations of blockchain technology?", "type": "technical"},
+                    {"question": "Explain the concept of decentralization and its importance.", "type": "technical"},
+                    {"question": "How do you ensure the security and immutability of blockchain transactions?", "type": "technical"},
                 ])
 
-            # Cloud questions
+            # Cloud questions (6)
             if interests.get('cloud', 0) > 0:
                 domain_questions.extend([
-                    {"question": "How do you choose between different cloud service models?", "type": "technical"},
-                    {"question": "Explain cloud security best practices.", "type": "technical"}
+                    {"question": "How do you choose between different cloud service models (IaaS, PaaS, SaaS)?", "type": "technical"},
+                    {"question": "Explain cloud security best practices.", "type": "technical"},
+                    {"question": "What is auto-scaling, and how does it help in cloud applications?", "type": "technical"},
+                    {"question": "How do you manage cost optimization in cloud deployments?", "type": "technical"},
+                    {"question": "Explain the differences between public, private, and hybrid clouds.", "type": "technical"},
+                    {"question": "How do you ensure high availability and disaster recovery in cloud systems?", "type": "technical"},
                 ])
 
             # If domain questions found, use them

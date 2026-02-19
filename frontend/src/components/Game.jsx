@@ -8,6 +8,8 @@ import GameUI from "./ui/GameUI";
 import Report from "./ui/Report";
 import AIAnalysis from "./ui/AIAnalysis";
 import ComprehensiveAnalysis from "./ui/ComprehensiveAnalysis";
+import RoomIntro from "./ui/RoomIntro";
+import KeyUnlockAnimation from "./ui/KeyUnlockAnimation";
 import {
   gameProgress,
   generateAptitudeAnalysis,
@@ -31,18 +33,18 @@ const Game = () => {
       keyA: false,
       keyB: false,
       keyC: false,
-    }
+    },
   );
   const [roomsCompleted, setRoomsCompleted] = useState(
     savedState?.roomsCompleted || {
       classroom: false,
       codingLab: false,
       interviewRoom: false,
-    }
+    },
   );
   const [showUI, setShowUI] = useState(null);
   const [gameCompleted, setGameCompleted] = useState(
-    savedState?.gameCompleted || false
+    savedState?.gameCompleted || false,
   );
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [scores, setScores] = useState(
@@ -50,7 +52,7 @@ const Game = () => {
       aptitude: null,
       coding: null,
       interview: null,
-    }
+    },
   );
   const [showReport, setShowReport] = useState(false);
   const [showAIAnalysis, setShowAIAnalysis] = useState(null);
@@ -65,6 +67,20 @@ const Game = () => {
     interview: null,
   });
   const [testFailed, setTestFailed] = useState(false);
+
+  // Room intro state
+  const [showRoomIntro, setShowRoomIntro] = useState(false);
+  const [roomIntroData, setRoomIntroData] = useState({
+    title: "",
+    subtitle: "",
+  });
+
+  // Key unlock animation state
+  const [showKeyUnlock, setShowKeyUnlock] = useState(false);
+  const [unlockedKey, setUnlockedKey] = useState({
+    letter: "A",
+    color: "blue",
+  });
 
   // Save game state to localStorage whenever it changes
   useEffect(() => {
@@ -93,12 +109,45 @@ const Game = () => {
     }
   }, [keysCollected, gameCompleted]);
 
+  // Show room intro when entering a new room
+  useEffect(() => {
+    const roomInfo = {
+      1: {
+        title: "CLASSROOM",
+        subtitle:
+          "Complete the Aptitude Test to unlock the first key. Answer questions correctly to proceed!",
+        accentColor: "#3b82f6", // Blue glow accent
+      },
+      2: {
+        title: "CODING LAB",
+        subtitle:
+          "Solve the programming challenge to earn the second key. Write clean, efficient code!",
+        accentColor: "#06b6d4", // Cyan / Neon blue accent
+      },
+      3: {
+        title: "INTERVIEW ROOM",
+        subtitle:
+          "Face the final HR interview. Demonstrate your communication skills to secure the last key!",
+        accentColor: "#a855f7", // Purple accent
+      },
+    };
+
+    const info = roomInfo[currentRoom];
+    if (info) {
+      setRoomIntroData(info);
+      setShowRoomIntro(true);
+    }
+  }, [currentRoom]);
+
   const handleRoomComplete = (roomType) => {
     setRoomsCompleted((prev) => ({ ...prev, [roomType]: true }));
 
     // Award keys based on room completion with enhanced animations
     if (roomType === "classroom") {
       setKeysCollected((prev) => ({ ...prev, keyA: true }));
+      // Show key unlock animation
+      setUnlockedKey({ letter: "A", color: "blue" });
+      setShowKeyUnlock(true);
       setIsTransitioning(true);
       setTimeout(() => {
         setCurrentRoom(2);
@@ -106,6 +155,9 @@ const Game = () => {
       }, 3000);
     } else if (roomType === "codingLab") {
       setKeysCollected((prev) => ({ ...prev, keyB: true }));
+      // Show key unlock animation
+      setUnlockedKey({ letter: "B", color: "green" });
+      setShowKeyUnlock(true);
       setIsTransitioning(true);
       setTimeout(() => {
         setCurrentRoom(3);
@@ -113,6 +165,9 @@ const Game = () => {
       }, 3000);
     } else if (roomType === "interviewRoom") {
       setKeysCollected((prev) => ({ ...prev, keyC: true }));
+      // Show key unlock animation
+      setUnlockedKey({ letter: "C", color: "purple" });
+      setShowKeyUnlock(true);
     }
   };
 
@@ -173,6 +228,20 @@ const Game = () => {
     }
   };
 
+  // Get glowing border color based on current room
+  const getRoomBorderColor = () => {
+    switch (currentRoom) {
+      case 1:
+        return "border-l-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.5)]";
+      case 2:
+        return "border-l-green-500 shadow-[0_0_20px_rgba(34,197,94,0.5)]";
+      case 3:
+        return "border-l-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.5)]";
+      default:
+        return "border-l-slate-500";
+    }
+  };
+
   return (
     <div
       className={`w-full h-screen bg-gradient-to-b ${getRoomTheme()} relative overflow-hidden`}
@@ -227,6 +296,25 @@ const Game = () => {
         {renderCurrentRoom()}
       </Canvas>
 
+      {/* Room Intro Overlay */}
+      {showRoomIntro && (
+        <RoomIntro
+          title={roomIntroData.title}
+          subtitle={roomIntroData.subtitle}
+          accentColor={roomIntroData.accentColor}
+          onComplete={() => setShowRoomIntro(false)}
+        />
+      )}
+
+      {/* Key Unlock Animation */}
+      {showKeyUnlock && (
+        <KeyUnlockAnimation
+          letter={unlockedKey.letter}
+          color={unlockedKey.color}
+          onComplete={() => setShowKeyUnlock(false)}
+        />
+      )}
+
       {/* Game UI Overlays */}
       <GameUI
         currentRoom={currentRoom}
@@ -250,20 +338,16 @@ const Game = () => {
 
           // Check if player failed (didn't pass the test)
           const failed = !result.passed;
-          if (failed) {
-            setTestFailed(true);
-            return;
-          }
           const completedTests =
             Object.values(scores).filter((score) => score !== null).length + 1; // +1 for current test
           const allCompleted = completedTests === 3;
 
-          if (allCompleted) {
-            // Generate comprehensive analysis after a delay
+          if (failed || allCompleted) {
+            // Generate comprehensive analysis for failed tests or when all completed
             setTimeout(() => {
               const comprehensiveAnalysis = generateComprehensiveAnalysis(
-                scores,
-                testData
+                { ...scores, [testType]: result },
+                { ...testData, [testType]: { result, param1, param2, param3 } },
               );
               setComprehensiveAnalysisData(comprehensiveAnalysis);
               setShowComprehensiveAnalysis(true);
@@ -310,10 +394,14 @@ const Game = () => {
         </div>
       </div>
 
-      {/* Enhanced Room Progress */}
-      <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md rounded-xl p-4 text-white z-10 border border-white/20">
+      {/* Enhanced Room Progress - Futuristic Glass HUD */}
+      <div
+        className={`absolute top-4 left-4 bg-white/10 backdrop-blur-md rounded-xl p-4 text-white z-10 border border-white/20 border-l-4 ${getRoomBorderColor()} hover:scale-105 transition-all duration-300`}
+      >
         <h3 className="text-lg font-bold mb-3 flex items-center gap-2">
-          <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+          <div
+            className={`w-3 h-3 ${currentRoom === 1 ? "bg-blue-500" : currentRoom === 2 ? "bg-green-500" : "bg-purple-500"} rounded-full animate-pulse`}
+          ></div>
           Progress
         </h3>
 
@@ -323,7 +411,7 @@ const Game = () => {
               currentRoom >= 1
                 ? "bg-blue-600/30 text-blue-300"
                 : "bg-gray-700/30 text-gray-500"
-            }`}
+            } ${currentRoom === 1 ? "animate-pulse" : ""}`}
           >
             <span>Room 1: Classroom</span>
             <span>
@@ -335,7 +423,7 @@ const Game = () => {
               currentRoom >= 2
                 ? "bg-green-600/30 text-green-300"
                 : "bg-gray-700/30 text-gray-500"
-            }`}
+            } ${currentRoom === 2 ? "animate-pulse" : ""}`}
           >
             <span>Room 2: Coding Lab</span>
             <span>
@@ -347,15 +435,15 @@ const Game = () => {
               currentRoom >= 3
                 ? "bg-purple-600/30 text-purple-300"
                 : "bg-gray-700/30 text-gray-500"
-            }`}
+            } ${currentRoom === 3 ? "animate-pulse" : ""}`}
           >
             <span>Room 3: Interview</span>
             <span>
               {roomsCompleted.interviewRoom
                 ? "✓"
                 : currentRoom === 3
-                ? "⏳"
-                : "○"}
+                  ? "⏳"
+                  : "○"}
             </span>
           </div>
         </div>
