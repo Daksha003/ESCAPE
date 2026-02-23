@@ -30,6 +30,7 @@ const Game = () => {
   const [stage, setStage] = useState("door");
   const [textPhase, setTextPhase] = useState(0);
   const [lockShaking, setLockShaking] = useState(false);
+  const [lockBouncing, setLockBouncing] = useState(false);
   const [lightBeam, setLightBeam] = useState(false);
   const [isFading, setIsFading] = useState(false);
 
@@ -75,19 +76,40 @@ const Game = () => {
   }, [textPhase, stage]);
 
   const handleLockClick = () => {
-    console.log("handleLockClick called, stage:", stage);
+    console.log("🧠 Cognitive Lock clicked!");
+    console.log("🔊 Playing metallic unlock sound...");
+
     if (stage !== "door") return;
+
+    // Trigger lock bounce animation
+    setLockBouncing(true);
+    setTimeout(() => setLockBouncing(false), 400);
+
+    // Trigger door shake
     setLockShaking(true);
-    console.log("🧠 Brain lock clicked! Transitioning...");
-    setStage("unlock");
+
+    // Show light beam effect after 300ms
+    setTimeout(() => {
+      setLightBeam(true);
+      console.log("💡 Light beam effect activated");
+    }, 300);
+
+    // Transition to unlock stage after 500ms
+    setTimeout(() => {
+      console.log("🚪 Door unlocking... Transitioning to Cognitive Chamber");
+      setStage("unlock");
+    }, 500);
+
+    // Fade to black after unlock animation (1.5s total)
     setTimeout(() => {
       setIsFading(true);
       setTimeout(() => {
         setStage("intro");
         setIsFading(false);
         setLockShaking(false);
-      }, 600);
-    }, 1000);
+        setLightBeam(false);
+      }, 700); // 700ms fade transition (within 500-800ms range)
+    }, 1500);
   };
 
   const handleEnterChamber = () => {
@@ -279,7 +301,12 @@ const Game = () => {
                   e.stopPropagation();
                   handleLockClick();
                 }}
-                className="group relative w-20 h-24 bg-slate-900 rounded-lg border-2 border-blue-500 hover:border-blue-400 transition-all duration-300 hover:scale-110 cursor-pointer shadow-[0_0_25px_rgba(59,130,246,0.5)]"
+                className={`group relative w-20 h-24 bg-slate-900 rounded-lg border-2 border-blue-500 hover:border-blue-400 transition-all duration-300 hover:scale-110 cursor-pointer shadow-[0_0_25px_rgba(59,130,246,0.5)] ${lockBouncing ? "animate-lockBounce" : "animate-pulseGlow"}`}
+                style={
+                  lockBouncing
+                    ? {}
+                    : { animation: "pulseGlow 2s ease-in-out infinite" }
+                }
               >
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="text-4xl">🧠</span>
