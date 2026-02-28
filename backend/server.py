@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException
+from fastapi import FastAPI, APIRouter
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 from typing import List, Optional
 import uuid
 from datetime import datetime
+import json
 
 import google.generativeai as genai
 
@@ -16,40 +17,40 @@ import google.generativeai as genai
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-# Create the main app without a prefix
 app = FastAPI()
-
-# Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
 
-# Define Models
 class StatusCheck(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     client_name: str
     timestamp: datetime = Field(default_factory=datetime.utcnow)
 
+
 class StatusCheckCreate(BaseModel):
     client_name: str
 
+
 class InterviewQuestionRequest(BaseModel):
-    conversation_history: List[dict]  # List of {question: str, answer: str}
-    question_number: int  # Current question number (1-6)
-    interests: Optional[dict] = None  # User interests for domain-specific questions
+    conversation_history: List[dict]
+    question_number: int
+    interests: Optional[dict] = None
+
 
 class InterviewQuestionResponse(BaseModel):
     question: str
-    question_type: str  # "personal" or "technical"
+    question_type: str
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
 
+
 class InterviewAnalysisRequest(BaseModel):
-    answers: List[str]  # List of interview answers
-    questions: List[dict]  # List of {question: str, type: str}
+    answers: List[str]
+    questions: List[dict]
+
 
 class InterviewAnalysisResponse(BaseModel):
     overallAssessment: str
@@ -61,10 +62,11 @@ class InterviewAnalysisResponse(BaseModel):
     aiInsights: str
     nextSteps: List[str]
 
-# Add your routes to the router instead of directly to app
+
 @api_router.get("/")
 async def root():
     return {"message": "Hello World"}
+
 
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
@@ -73,19 +75,19 @@ async def create_status_check(input: StatusCheckCreate):
     _ = await db.status_checks.insert_one(status_obj.dict())
     return status_obj
 
+
 @api_router.get("/status", response_model=List[StatusCheck])
 async def get_status_checks():
     status_checks = await db.status_checks.find().to_list(1000)
     return [StatusCheck(**status_check) for status_check in status_checks]
 
-# Configure logging
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
 
-# Initialize Gemini client
 gemini_api_key = os.environ.get('GEMINI_API_KEY')
 if gemini_api_key:
     genai.configure(api_key=gemini_api_key)
@@ -94,42 +96,22 @@ else:
     gemini_model = None
     print("Warning: GEMINI_API_KEY not found in environment variables")
 
+
 @api_router.post("/generate-interview-question", response_model=InterviewQuestionResponse)
 async def generate_interview_question(request: InterviewQuestionRequest):
-    """
-    Generate the next interview question using Google's Gemini API based on conversation history.
-    Falls back to static questions if AI is unavailable.
-    """
     try:
         if not gemini_model:
-            logger.warning("Gemini model not available, using fallback")
             return await generate_fallback_question(request.question_number)
 
-        # Build conversation context
         conversation_text = ""
         for item in request.conversation_history:
             conversation_text += f"Q: {item['question']}\nA: {item['answer']}\n\n"
 
-        # Determine question type distribution (mix of personal and technical)
-        is_personal = request.question_number % 3 == 1  # Every 3rd question is personal
+        is_personal = request.question_number % 3 == 1
         question_type = "personal" if is_personal else "technical"
 
-        # Create prompt for Gemini
-        prompt = f"""Generate a {question_type} interview question for software engineering candidates.
+        prompt = f"Generate a {question_type} interview question for software engineering candidates. Return only the question text."
 
-Guidelines:
-- Professional and workplace-appropriate
-- Technical: programming, algorithms, system design
-- Personal: career goals, learning experiences
-- Build on conversation history when possible
-- Clear and specific
-
-History:
-{conversation_text}
-
-Return only the question text."""
-
-        # Call Gemini API
         response = gemini_model.generate_content(
             prompt,
             generation_config=genai.types.GenerationConfig(
@@ -138,19 +120,8 @@ Return only the question text."""
             )
         )
 
-        # Check for safety filter blocks
-        if hasattr(response, 'candidates') and response.candidates:
-            candidate = response.candidates[0]
-            if hasattr(candidate, 'finish_reason') and candidate.finish_reason == 2:  # SAFETY
-                logger.warning("Gemini safety filter blocked question generation, using fallback")
-                return await generate_fallback_question(request.question_number, request.interests)
-
         question_text = response.text.strip()
-
-        # Clean up the question (remove quotes if present)
         if question_text.startswith('"') and question_text.endswith('"'):
-            question_text = question_text[1:-1]
-        if question_text.startswith("'") and question_text.endswith("'"):
             question_text = question_text[1:-1]
 
         return InterviewQuestionResponse(
@@ -162,327 +133,246 @@ Return only the question text."""
         logger.error(f"Error generating AI question: {str(e)}")
         return await generate_fallback_question(request.question_number, request.interests)
 
+
 async def generate_fallback_question(question_number: int, interests: Optional[dict] = None) -> InterviewQuestionResponse:
-    """
-    Generate a fallback question when AI is unavailable.
-    Uses domain-wise questions based on user interests if provided, otherwise static questions.
-    """
-    try:
-        # If interests are provided, generate domain-wise questions
-        if interests:
-            domain_questions = []
+    fallback_questions = [
+        {"question": "Tell me about yourself and your background in computer science.", "type": "personal"},
+        {"question": "What programming languages are you proficient in?", "type": "technical"},
+        {"question": "Explain the difference between object-oriented and functional programming.", "type": "technical"},
+        {"question": "Describe a challenging project you worked on and how you overcame difficulties.", "type": "personal"},
+        {"question": "What is your approach to debugging code?", "type": "technical"},
+        {"question": "How do you stay updated with technology trends?", "type": "personal"},
+        {"question": "Explain the concept of time complexity and space complexity.", "type": "technical"}
+    ]
 
-            # Frontend questions
-            if interests.get('frontend', 0) > 0:
-                domain_questions.extend([
-                    {"question": "How would you optimize a slow-loading web page?", "type": "technical"},
-                    {"question": "Explain the difference between React state and props.", "type": "technical"}
-                ])
+    index = (question_number - 1) % len(fallback_questions)
+    question = fallback_questions[index]
 
-            # Backend questions
-            if interests.get('backend', 0) > 0:
-                domain_questions.extend([
-                    {"question": "How do you handle database connections in a high-traffic application?", "type": "technical"},
-                    {"question": "Explain RESTful API design principles.", "type": "technical"}
-                ])
+    return InterviewQuestionResponse(
+        question=question["question"],
+        question_type=question["type"]
+    )
 
-            # Data Science questions
-            if interests.get('dataScience', 0) > 0:
-                domain_questions.extend([
-                    {"question": "Explain the difference between supervised and unsupervised learning.", "type": "technical"},
-                    {"question": "How do you handle missing data in a dataset?", "type": "technical"}
-                ])
 
-            # Machine Learning questions
-            if interests.get('machineLearning', 0) > 0:
-                domain_questions.extend([
-                    {"question": "What are the differences between overfitting and underfitting?", "type": "technical"},
-                    {"question": "Explain the concept of gradient descent.", "type": "technical"}
-                ])
+FALLBACK_QUESTION_KEY_POINTS = {
+    "Tell me about yourself": ["education", "degree", "computer science", "experience", "skills", "projects"],
+    "programming languages": ["language", "python", "java", "javascript", "programming", "proficient"],
+    "object-oriented": ["object-oriented", "oop", "class", "inheritance", "functional"],
+    "challenging project": ["challenge", "project", "problem", "solution", "team"],
+    "debugging": ["debug", "log", "breakpoint", "error", "test"],
+    "technology trends": ["learn", "course", "blog", "documentation", "practice"],
+    "time complexity": ["time complexity", "big o", "algorithm", "performance"]
+}
 
-            # DevOps questions
-            if interests.get('devops', 0) > 0:
-                domain_questions.extend([
-                    {"question": "How do you implement CI/CD pipelines?", "type": "technical"},
-                    {"question": "Explain container orchestration and its benefits.", "type": "technical"}
-                ])
 
-            # Mobile questions
-            if interests.get('mobile', 0) > 0:
-                domain_questions.extend([
-                    {"question": "What are the key considerations for mobile app performance?", "type": "technical"},
-                    {"question": "How do you handle different screen sizes and orientations in mobile apps?", "type": "technical"}
-                ])
+def evaluate_with_key_points(answer: str, question: str) -> tuple:
+    answer_lower = answer.lower()
+    question_lower = question.lower()
+    
+    key_points = None
+    for key, points in FALLBACK_QUESTION_KEY_POINTS.items():
+        if key in question_lower:
+            key_points = points
+            break
+    
+    if not key_points:
+        key_points = ["relevant", "experience", "understanding"]
+    
+    matched_points = sum(1 for point in key_points if point.lower() in answer_lower)
+    
+    if matched_points >= 2 or len(answer) > 50:
+        feedback = f"Answer covers {matched_points} key points"
+        return 1, feedback
+    elif len(answer) > 20:
+        feedback = "Answer provided but lacks key technical points"
+        return 0, feedback
+    else:
+        feedback = "Answer too brief or incomplete"
+        return 0, feedback
 
-            # Cybersecurity questions
-            if interests.get('cybersecurity', 0) > 0:
-                domain_questions.extend([
-                    {"question": "What are common web application security vulnerabilities?", "type": "technical"},
-                    {"question": "How do you implement secure authentication?", "type": "technical"}
-                ])
 
-            # Blockchain questions
-            if interests.get('blockchain', 0) > 0:
-                domain_questions.extend([
-                    {"question": "Explain the difference between public and private blockchains.", "type": "technical"},
-                    {"question": "What are smart contracts and how do they work?", "type": "technical"}
-                ])
+def clean_json_response(text: str) -> str:
+    # Simple cleanup - strip whitespace and newlines
+    result = text.strip()
+    # Remove any leading/trailing characters that aren't part of JSON
+    result = result.lstrip('\n\r').rstrip('\n\r')
+    return result
 
-            # Cloud questions
-            if interests.get('cloud', 0) > 0:
-                domain_questions.extend([
-                    {"question": "How do you choose between different cloud service models?", "type": "technical"},
-                    {"question": "Explain cloud security best practices.", "type": "technical"}
-                ])
-
-            # If domain questions found, use them
-            if domain_questions:
-                # Ensure unique questions by using a set-like approach
-                used_questions = set()
-                unique_questions = []
-                for q in domain_questions:
-                    question_text = q["question"]
-                    if question_text not in used_questions:
-                        used_questions.add(question_text)
-                        unique_questions.append(q)
-
-                # Get question based on number (1-indexed), cycling through available questions
-                index = (question_number - 1) % len(unique_questions)
-                question = unique_questions[index]
-
-                return InterviewQuestionResponse(
-                    question=question["question"],
-                    question_type=question["type"]
-                )
-
-        # Default fallback questions if no interests or no domain questions
-        fallback_questions = [
-            {
-                "question": "Tell me about yourself and your background in computer science.",
-                "type": "personal"
-            },
-            {
-                "question": "What programming languages are you proficient in?",
-                "type": "technical"
-            },
-            {
-                "question": "Explain the difference between object-oriented and functional programming.",
-                "type": "technical"
-            },
-            {
-                "question": "Describe a challenging project you worked on and how you overcame difficulties.",
-                "type": "personal"
-            },
-            {
-                "question": "What is your approach to debugging code?",
-                "type": "technical"
-            },
-            {
-                "question": "How do you stay updated with technology trends?",
-                "type": "personal"
-            },
-            {
-                "question": "Explain the concept of time complexity and space complexity.",
-                "type": "technical"
-            }
-        ]
-
-        # Get question based on number (1-indexed)
-        index = (question_number - 1) % len(fallback_questions)
-        question = fallback_questions[index]
-
-        return InterviewQuestionResponse(
-            question=question["question"],
-            question_type=question["type"]
-        )
-    except Exception as e:
-        logger.error(f"Error generating fallback question: {str(e)}")
-        # Ultimate fallback
-        return InterviewQuestionResponse(
-            question="Tell me about a challenging project you worked on and what you learned from it.",
-            question_type="personal"
-        )
 
 @api_router.post("/analyze-interview", response_model=InterviewAnalysisResponse)
 async def analyze_interview(request: InterviewAnalysisRequest):
-    """
-    Generate AI-powered interview analysis using Google's Gemini API.
-    Falls back to rule-based analysis if AI is unavailable.
-    """
     try:
         if not gemini_model:
-            logger.warning("Gemini model not available, using fallback analysis")
             return await generate_fallback_analysis(request.answers, request.questions)
 
-        # Build conversation context from answers and questions
-        conversation_text = ""
+        answer_evaluations = []
+        total_points = 0
+        
         for i, (answer, question) in enumerate(zip(request.answers, request.questions)):
-            if answer and answer.strip():
-                conversation_text += f"Q{i+1}: {question.get('question', '')}\nA{i+1}: {answer}\n\n"
+            if not answer or not answer.strip():
+                answer_evaluations.append({
+                    "question": question.get('question', ''),
+                    "answer": "",
+                    "points": 0,
+                    "feedback": "No answer provided"
+                })
+                continue
+                
+            question_text = question.get('question', '')
+            
+            eval_prompt = f"""Evaluate this interview answer. Question: {question_text}. Answer: {answer}. 
+Return ONLY JSON: {{"points": 1, "feedback": "brief feedback"}} if satisfactory, or {{"points": 0, "feedback": "reason"}} if not."""
 
-        # Create prompt for Gemini
-        prompt = f"""Analyze software engineering interview responses.
+            try:
+                eval_response = gemini_model.generate_content(
+                    eval_prompt,
+                    generation_config=genai.types.GenerationConfig(
+                        temperature=0.3,
+                        max_output_tokens=200,
+                    )
+                )
+                
+                eval_text = clean_json_response(eval_response.text)
+                eval_data = json.loads(eval_text)
+                
+                points = eval_data.get("points", 0)
+                feedback = eval_data.get("feedback", "")
+                
+            except Exception as e:
+                logger.error(f"Error evaluating answer {i+1}: {str(e)}")
+                points, feedback = evaluate_with_key_points(answer, question_text)
+            
+            total_points += points
+            answer_evaluations.append({
+                "question": question_text,
+                "answer": answer,
+                "points": points,
+                "feedback": feedback
+            })
 
-Return JSON:
-{{
-  "overallAssessment": "brief summary",
-  "strengths": ["strength1", "strength2"],
-  "weaknesses": ["weakness1", "weakness2"],
-  "recommendations": ["advice1", "advice2"],
-  "communicationSkills": ["skill1", "skill2"],
-  "technicalDepth": ["depth1", "depth2"],
-  "aiInsights": "potential score out of 100",
-  "nextSteps": ["step1", "step2"]
-}}
+        score_percentage = (total_points / 7) * 100 if len(request.answers) > 0 else 0
+        passed = total_points >= 4
 
-Conversation:
-{conversation_text}"""
-
-        # Call Gemini API
-        response = gemini_model.generate_content(
-            prompt,
-            generation_config=genai.types.GenerationConfig(
-                temperature=0.7,
-                max_output_tokens=1000,
-            )
-        )
-
-        # Check for safety filter blocks
-        if hasattr(response, 'candidates') and response.candidates:
-            candidate = response.candidates[0]
-            if hasattr(candidate, 'finish_reason') and candidate.finish_reason == 2:  # SAFETY
-                logger.warning("Gemini safety filter blocked analysis generation, using fallback")
-                return await generate_fallback_analysis(request.answers, request.questions)
-
-        # Parse the response
-        analysis_text = response.text.strip()
-
-        # Clean up the response (remove markdown code blocks if present)
-        if analysis_text.startswith('```json'):
-            analysis_text = analysis_text[7:]
-        if analysis_text.endswith('```'):
-            analysis_text = analysis_text[:-3]
-        analysis_text = analysis_text.strip()
-
-        # Parse JSON response
-        import json
-        analysis_data = json.loads(analysis_text)
-
-        return InterviewAnalysisResponse(**analysis_data)
-
-    except Exception as e:
-        logger.error(f"Error generating AI interview analysis: {str(e)}")
-        return await generate_fallback_analysis(request.answers, request.questions)
-
-async def generate_fallback_analysis(answers: List[str], questions: List[dict]) -> InterviewAnalysisResponse:
-    """
-    Generate fallback analysis when AI is unavailable.
-    Uses the existing rule-based logic from gameData.js.
-    """
-    try:
-        # Implement basic rule-based analysis similar to the frontend
-        total_questions = len(answers)
-        answered_questions = len([a for a in answers if a and a.strip()])
-
-        # Calculate basic scores
-        avg_answer_length = sum(len(ans) for ans in answers if ans) / len(answers) if answers else 0
-
-        # Basic analysis logic
-        overall_assessment = ""
-        if answered_questions == total_questions:
-            if avg_answer_length > 80:
-                overall_assessment = "Outstanding interview performance! You demonstrated excellent communication and technical skills."
-            elif avg_answer_length > 40:
-                overall_assessment = "Good interview performance with strong potential. Focus on consistency across all questions."
-            else:
-                overall_assessment = "Average interview performance. Work on providing more detailed and relevant answers."
-        else:
-            overall_assessment = f"Completed {answered_questions} out of {total_questions} questions. Focus on completing all interview questions."
-
-        # Basic strengths and weaknesses
         strengths = []
         weaknesses = []
+        answered_satisfactorily = sum(1 for e in answer_evaluations if e["points"] == 1)
+        
+        if answered_satisfactorily >= 5:
+            strengths.append("Excellent understanding across most topics")
+        if answered_satisfactorily >= 4:
+            strengths.append("Good communication and technical knowledge")
+            
+        if answered_satisfactorily < 3:
+            weaknesses.append("Need more depth in technical responses")
+        if score_percentage < 60:
+            weaknesses.append("Several answers were not satisfactory")
 
-        if avg_answer_length > 80:
-            strengths.append("Good communication skills with detailed responses")
-        if answered_questions == total_questions:
-            strengths.append("Completed all interview questions")
-
-        if avg_answer_length < 40:
-            weaknesses.append("Responses are too brief - expand on your answers")
-        if answered_questions < total_questions:
-            weaknesses.append("Did not answer all questions completely")
-
-        # Technical analysis
-        technical_questions = [q for q in questions if q.get('type') == 'technical']
-        technical_answers = [answers[i] for i in range(len(answers)) if i < len(questions) and questions[i].get('type') == 'technical' and answers[i] and answers[i].strip()]
-
-        communication_skills = []
-        technical_depth = []
-
-        if avg_answer_length > 100:
-            communication_skills.append("Excellent verbal communication skills")
-        elif avg_answer_length > 50:
-            communication_skills.append("Good communication skills")
+        if score_percentage >= 80:
+            overall_assessment = "Outstanding interview performance!"
+        elif score_percentage >= 60:
+            overall_assessment = "Good interview performance. You passed!"
+        elif score_percentage >= 40:
+            overall_assessment = "Average interview performance."
         else:
-            communication_skills.append("Communication skills need improvement")
-
-        if len(technical_answers) > 0:
-            technical_depth.append("Demonstrated basic technical knowledge")
-        else:
-            technical_depth.append("Limited technical depth shown")
-
-        recommendations = [
-            "Practice answering common interview questions out loud",
-            "Use the STAR method (Situation, Task, Action, Result) for behavioral questions",
-            "Research company-specific technologies and prepare relevant examples",
-            "Record yourself answering questions to improve delivery and confidence",
-        ]
-
-        ai_insights = "This analysis is based on basic heuristics. Consider practicing with more detailed responses and technical examples."
-
-        next_steps = [
-            "Review technical concepts mentioned in the questions",
-            "Practice mock interviews with friends or mentors",
-            "Prepare specific examples from your experience",
-            "Work on speaking clearly and confidently",
-        ]
+            overall_assessment = "Interview performance needs improvement."
 
         return InterviewAnalysisResponse(
             overallAssessment=overall_assessment,
             strengths=strengths,
             weaknesses=weaknesses,
-            recommendations=recommendations,
-            communicationSkills=communication_skills,
-            technicalDepth=technical_depth,
-            aiInsights=ai_insights,
-            nextSteps=next_steps
+            recommendations=["Practice answering technical questions", "Use specific examples"],
+            communicationSkills=["Clarity" if answered_satisfactorily >= 4 else "Work on communication"],
+            technicalDepth=[f"Knowledge in {answered_satisfactorily}/7 answers"],
+            aiInsights=f"Score: {score_percentage:.0f}% ({total_points}/7) - {'PASSED' if passed else 'NEEDS IMPROVEMENT'}",
+            nextSteps=["Review technical concepts", "Practice mock interviews"]
+        )
+
+    except Exception as e:
+        logger.error(f"Error generating AI interview analysis: {str(e)}")
+        return await generate_fallback_analysis(request.answers, request.questions)
+
+
+async def generate_fallback_analysis(answers: List[str], questions: List[dict]) -> InterviewAnalysisResponse:
+    try:
+        total_points = 0
+        answer_evaluations = []
+        
+        for answer, question in zip(answers, questions):
+            if not answer or not answer.strip():
+                answer_evaluations.append((0, "No answer provided"))
+                continue
+            
+            points, feedback = evaluate_with_key_points(answer, question.get('question', ''))
+            total_points += points
+            answer_evaluations.append((points, feedback))
+        
+        score_percentage = (total_points / 7) * 100 if len(answers) > 0 else 0
+        passed = total_points >= 4
+        answered_satisfactorily = sum(1 for p, _ in answer_evaluations if p == 1)
+        
+        strengths = []
+        weaknesses = []
+        
+        if answered_satisfactorily >= 5:
+            strengths.append("Excellent understanding")
+        if answered_satisfactorily >= 4:
+            strengths.append("Good communication")
+            
+        if answered_satisfactorily < 3:
+            weaknesses.append("Need more depth")
+        if score_percentage < 60:
+            weaknesses.append("Several answers not satisfactory")
+        
+        if score_percentage >= 80:
+            overall_assessment = "Outstanding interview performance!"
+        elif score_percentage >= 60:
+            overall_assessment = "Good interview performance. You passed!"
+        elif score_percentage >= 40:
+            overall_assessment = "Average interview performance."
+        else:
+            overall_assessment = "Interview performance needs improvement."
+
+        return InterviewAnalysisResponse(
+            overallAssessment=overall_assessment,
+            strengths=strengths,
+            weaknesses=weaknesses,
+            recommendations=["Practice more", "Use specific examples"],
+            communicationSkills=["Clarity" if answered_satisfactorily >= 4 else "Work on communication"],
+            technicalDepth=[f"Knowledge in {answered_satisfactorily}/7 answers"],
+            aiInsights=f"Score: {score_percentage:.0f}% ({total_points}/7) - {'PASSED' if passed else 'NEEDS IMPROVEMENT'}",
+            nextSteps=["Review concepts", "Practice interviews"]
         )
 
     except Exception as e:
         logger.error(f"Error generating fallback analysis: {str(e)}")
-        # Ultimate fallback
         return InterviewAnalysisResponse(
-            overallAssessment="Unable to analyze interview performance due to technical issues.",
+            overallAssessment="Unable to analyze interview performance.",
             strengths=[],
             weaknesses=[],
-            recommendations=["Please try again or contact support"],
+            recommendations=["Please try again"],
             communicationSkills=[],
             technicalDepth=[],
             aiInsights="Analysis unavailable",
             nextSteps=["Retry the interview analysis"]
         )
 
-# Include the router in the main app
+
 app.include_router(api_router)
+
+cors_origins = os.environ.get('CORS_ORIGINS', '*')
+if cors_origins == '*':
+    origins = ['*']
+else:
+    origins = [origin.strip() for origin in cors_origins.split(',')]
 
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_origins=origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
@@ -490,4 +380,6 @@ async def shutdown_db_client():
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    import os
+    port = int(os.environ.get('PORT', 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)

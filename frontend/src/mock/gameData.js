@@ -1212,7 +1212,7 @@ export const generateDynamicQuestions = (interests) => {
       interviewQuestions[3], // Challenging project experience
       interviewQuestions[4], // Debugging approach
       interviewQuestions[5], // Staying updated with technology
-      interviewQuestions[6] // Time/Space complexity
+      interviewQuestions[6], // Time/Space complexity
     );
   }
 
@@ -1230,7 +1230,7 @@ export const evaluateInterviewAnswers = (answers) => {
     const answerLength = answer.length;
     const hasKeywords = question.expectedKeywords
       ? question.expectedKeywords.some((keyword) =>
-          answer.toLowerCase().includes(keyword.toLowerCase())
+          answer.toLowerCase().includes(keyword.toLowerCase()),
         )
       : false;
 
@@ -1262,6 +1262,8 @@ export const generateAptitudeAnalysis = (result, questions, answers) => {
   const { score, correct, totalQuestions } = result;
 
   let analysis = {
+    overallAssessment: "",
+    aiInsights: "",
     strengths: [],
     weaknesses: [],
     recommendations: [],
@@ -1269,10 +1271,35 @@ export const generateAptitudeAnalysis = (result, questions, answers) => {
 
   // Check if questions and answers are provided
   if (!questions || !answers) {
+    analysis.overallAssessment = "Analysis could not be generated properly.";
+    analysis.aiInsights = "Test data was not available for analysis.";
     analysis.recommendations.push(
-      "Unable to analyze aptitude performance - test data not available"
+      "Unable to analyze aptitude performance - test data not available",
     );
     return analysis;
+  }
+
+  // Generate overall assessment based on score
+  if (score >= 80) {
+    analysis.overallAssessment =
+      "Outstanding aptitude performance! You demonstrated exceptional analytical and problem-solving skills.";
+    analysis.aiInsights =
+      "Your strong mathematical reasoning and quick thinking make you a top candidate. Keep maintaining this level of performance.";
+  } else if (score >= 60) {
+    analysis.overallAssessment =
+      "Good aptitude performance with solid analytical skills. You have passed the threshold for placement consideration.";
+    analysis.aiInsights =
+      "You have demonstrated adequate problem-solving abilities. Focus on improving your weak areas to increase your chances of success.";
+  } else if (score >= 40) {
+    analysis.overallAssessment =
+      "Average aptitude performance. There's room for improvement in several areas.";
+    analysis.aiInsights =
+      "Your performance indicates the need for more practice in quantitative aptitude and logical reasoning. Consider additional study resources.";
+  } else {
+    analysis.overallAssessment =
+      "Significant improvement needed in aptitude skills. Focus on building fundamental concepts.";
+    analysis.aiInsights =
+      "Dedicated practice is required to improve your analytical abilities. Start with basic concepts and progressively increase difficulty.";
   }
 
   // Analyze performance by topic
@@ -1331,7 +1358,7 @@ export const generateAptitudeAnalysis = (result, questions, answers) => {
   if (score < 60) {
     analysis.recommendations.push("Practice more aptitude questions daily");
     analysis.recommendations.push(
-      "Focus on understanding basic concepts before attempting questions"
+      "Focus on understanding basic concepts before attempting questions",
     );
   } else if (score < 80) {
     analysis.recommendations.push("Work on time management during tests");
@@ -1347,55 +1374,85 @@ export const generateAptitudeAnalysis = (result, questions, answers) => {
 export const generateCodingAnalysis = (result, language, code) => {
   const { passed } = result;
 
+  // Handle undefined code parameter
+  const safeCode = code || "";
+
   let analysis = {
+    overallAssessment: "",
+    aiInsights: "",
     strengths: [],
-    weaknesses: [],
+    areasForImprovement: [],
     recommendations: [],
   };
 
+  // Generate overallAssessment and aiInsights
+  if (passed) {
+    analysis.overallAssessment =
+      "Excellent coding performance! Your solution correctly passed all test cases.";
+    analysis.aiInsights =
+      "You demonstrated strong problem-solving skills and proper implementation of the algorithm.";
+  } else {
+    analysis.overallAssessment =
+      "The code needs improvement to pass all test cases.";
+    analysis.aiInsights =
+      "Focus on understanding the problem requirements and edge cases.";
+  }
+
   if (passed) {
     analysis.strengths.push(
-      `Good understanding of ${language} syntax and structure`
+      `Good understanding of ${language} syntax and structure`,
     );
     analysis.strengths.push("Able to implement algorithmic logic correctly");
 
-    if (code.includes("if") || code.includes("for") || code.includes("while")) {
+    if (
+      safeCode.includes("if") ||
+      safeCode.includes("for") ||
+      safeCode.includes("while")
+    ) {
       analysis.strengths.push("Proper use of control structures");
     }
 
-    if (language === "python" && code.includes("def")) {
+    if (language === "python" && safeCode.includes("def")) {
       analysis.strengths.push("Good function definition practices");
-    } else if (language === "javascript" && code.includes("function")) {
+    } else if (language === "javascript" && safeCode.includes("function")) {
       analysis.strengths.push("Proper function declaration");
-    } else if (language === "java" && code.includes("public static")) {
+    } else if (language === "java" && safeCode.includes("public static")) {
       analysis.strengths.push("Correct method signature and modifiers");
     }
 
     analysis.recommendations.push(
-      "Continue practicing different problem types"
+      "Continue practicing different problem types",
     );
     analysis.recommendations.push("Try implementing more complex algorithms");
   } else {
-    analysis.weaknesses.push("Code logic needs debugging and correction");
+    // Use areasForImprovement instead of weaknesses for consistency
+    if (!analysis.areasForImprovement) {
+      analysis.areasForImprovement = [];
+    }
+    analysis.areasForImprovement.push(
+      "Code logic needs debugging and correction",
+    );
 
     if (
       !code.includes("function") &&
       !code.includes("def") &&
       !code.includes("public static")
     ) {
-      analysis.weaknesses.push("Missing proper function/method definition");
+      analysis.areasForImprovement.push(
+        "Missing proper function/method definition",
+      );
     }
 
     if (!code.includes("return")) {
-      analysis.weaknesses.push("Missing return statement in function");
+      analysis.areasForImprovement.push("Missing return statement in function");
     }
 
     analysis.recommendations.push(
-      "Review basic syntax and structure for the chosen language"
+      "Review basic syntax and structure for the chosen language",
     );
     analysis.recommendations.push("Practice with simpler problems first");
     analysis.recommendations.push(
-      "Use debugging tools to understand code flow"
+      "Use debugging tools to understand code flow",
     );
   }
 
@@ -1405,7 +1462,7 @@ export const generateCodingAnalysis = (result, language, code) => {
 export const generateInterviewAnalysis = (
   result,
   answers,
-  questions = interviewQuestions
+  questions = interviewQuestions,
 ) => {
   const { score, totalQuestions, passed } = result;
 
@@ -1419,6 +1476,12 @@ export const generateInterviewAnalysis = (
     aiInsights: "",
     nextSteps: [],
   };
+
+  // Defensive: ensure answers is an array
+  const safeAnswers = Array.isArray(answers) ? answers : [];
+  const safeQuestions = Array.isArray(questions)
+    ? questions
+    : interviewQuestions;
 
   // Overall assessment
   const percentage = (score / totalQuestions) * 100;
@@ -1436,30 +1499,30 @@ export const generateInterviewAnalysis = (
       "Interview performance needs significant improvement. Practice structured responses and technical concepts.";
   }
 
-  // Analyze answers
-  answers.forEach((answer, index) => {
+  // Analyze answers - use safe arrays
+  safeAnswers.forEach((answer, index) => {
     if (!answer || answer.trim().length === 0) return;
 
-    const question = questions[index] || {};
+    const question = safeQuestions[index] || {};
     const answerLength = answer.length;
     const hasKeywords = question.expectedKeywords
       ? question.expectedKeywords.some((keyword) =>
-          answer.toLowerCase().includes(keyword.toLowerCase())
+          answer.toLowerCase().includes(keyword.toLowerCase()),
         )
       : false;
 
     // Communication analysis
     if (answerLength > 100) {
       analysis.communicationSkills.push(
-        `Question ${index + 1}: Detailed and comprehensive response`
+        `Question ${index + 1}: Detailed and comprehensive response`,
       );
     } else if (answerLength > 50) {
       analysis.communicationSkills.push(
-        `Question ${index + 1}: Good response length`
+        `Question ${index + 1}: Good response length`,
       );
     } else {
       analysis.weaknesses.push(
-        `Question ${index + 1}: Response could be more detailed`
+        `Question ${index + 1}: Response could be more detailed`,
       );
     }
 
@@ -1467,60 +1530,60 @@ export const generateInterviewAnalysis = (
     if (question.type === "technical") {
       if (hasKeywords && answerLength > 80) {
         analysis.technicalDepth.push(
-          `Question ${index + 1}: Strong technical explanation`
+          `Question ${index + 1}: Strong technical explanation`,
         );
       } else if (hasKeywords) {
         analysis.technicalDepth.push(
-          `Question ${index + 1}: Basic technical understanding`
+          `Question ${index + 1}: Basic technical understanding`,
         );
       } else {
         analysis.technicalDepth.push(
-          `Question ${index + 1}: Needs more technical depth`
+          `Question ${index + 1}: Needs more technical depth`,
         );
       }
     }
   });
 
-  // Strengths and weaknesses
+  // Strengths and weaknesses - use safeAnswers
   const avgAnswerLength =
-    answers.reduce((sum, ans) => sum + (ans ? ans.length : 0), 0) /
-    answers.length;
+    safeAnswers.reduce((sum, ans) => sum + (ans ? ans.length : 0), 0) /
+    (safeAnswers.length || 1);
   if (avgAnswerLength > 80) {
     analysis.strengths.push(
-      "Good communication skills with detailed responses"
+      "Good communication skills with detailed responses",
     );
   } else if (avgAnswerLength < 40) {
     analysis.weaknesses.push(
-      "Responses are too brief - expand on your answers"
+      "Responses are too brief - expand on your answers",
     );
   }
 
-  const technicalScore = answers.filter((answer, index) => {
-    const question = questions[index];
+  const technicalScore = safeAnswers.filter((answer, index) => {
+    const question = safeQuestions[index];
     return (
       question &&
       question.type === "technical" &&
       answer &&
       question.expectedKeywords &&
       question.expectedKeywords.some((keyword) =>
-        answer.toLowerCase().includes(keyword.toLowerCase())
+        answer.toLowerCase().includes(keyword.toLowerCase()),
       )
     );
   }).length;
 
   const totalTechnical = questions.filter(
-    (q) => q && q.type === "technical"
+    (q) => q && q.type === "technical",
   ).length;
   const technicalPercentage =
     totalTechnical > 0 ? (technicalScore / totalTechnical) * 100 : 0;
 
   if (technicalPercentage >= 75) {
     analysis.strengths.push(
-      "Strong technical knowledge and explanation skills"
+      "Strong technical knowledge and explanation skills",
     );
   } else if (technicalPercentage < 50) {
     analysis.weaknesses.push(
-      "Technical explanations need more depth and accuracy"
+      "Technical explanations need more depth and accuracy",
     );
   }
 
@@ -1615,8 +1678,8 @@ export const generateComprehensiveAnalysis = (scores, testData = {}) => {
       completedTests.length === 0
         ? "Start with the aptitude test to begin your placement preparation."
         : completedTests.length === 1
-        ? "Continue with the remaining tests to get a complete assessment."
-        : "Complete the final test for comprehensive feedback."
+          ? "Continue with the remaining tests to get a complete assessment."
+          : "Complete the final test for comprehensive feedback."
     }`;
   }
 
@@ -1631,8 +1694,8 @@ export const generateComprehensiveAnalysis = (scores, testData = {}) => {
         aptitudeScore >= 80
           ? "Excellent analytical skills"
           : aptitudeScore >= 60
-          ? "Good foundation"
-          : "Needs improvement",
+            ? "Good foundation"
+            : "Needs improvement",
     });
   }
 
@@ -1659,8 +1722,8 @@ export const generateComprehensiveAnalysis = (scores, testData = {}) => {
         interviewScore >= 80
           ? "Strong communication skills"
           : interviewScore >= 60
-          ? "Good responses"
-          : "Needs more detail",
+            ? "Good responses"
+            : "Needs more detail",
     });
   }
 
@@ -1669,7 +1732,7 @@ export const generateComprehensiveAnalysis = (scores, testData = {}) => {
     const aptitudeAnalysis = generateAptitudeAnalysis(
       scores.aptitude,
       testData.aptitude.questions,
-      testData.aptitude.answers
+      testData.aptitude.answers,
     );
     analysis.strengths.push(...aptitudeAnalysis.strengths);
     analysis.weaknesses.push(...aptitudeAnalysis.weaknesses);
@@ -1679,7 +1742,7 @@ export const generateComprehensiveAnalysis = (scores, testData = {}) => {
     const codingAnalysis = generateCodingAnalysis(
       scores.coding,
       testData.coding.language,
-      testData.coding.code
+      testData.coding.code,
     );
     analysis.strengths.push(...codingAnalysis.strengths);
     analysis.weaknesses.push(...codingAnalysis.weaknesses);
@@ -1688,7 +1751,7 @@ export const generateComprehensiveAnalysis = (scores, testData = {}) => {
   if (scores.interview !== null && testData.interview) {
     const interviewAnalysis = generateInterviewAnalysis(
       scores.interview,
-      testData.interview.answers
+      testData.interview.answers,
     );
     analysis.strengths.push(...interviewAnalysis.strengths);
     analysis.weaknesses.push(...interviewAnalysis.weaknesses);
@@ -1717,29 +1780,29 @@ export const generateComprehensiveAnalysis = (scores, testData = {}) => {
   // Recommendations based on performance
   if (analysis.weaknesses.length > 0) {
     analysis.recommendations.push(
-      `Address weaknesses in: ${analysis.weaknesses.slice(0, 3).join(", ")}`
+      `Address weaknesses in: ${analysis.weaknesses.slice(0, 3).join(", ")}`,
     );
   }
 
   if (completedTests.length < 3) {
     analysis.recommendations.push(
-      "Complete all remaining tests for a full assessment of your placement readiness"
+      "Complete all remaining tests for a full assessment of your placement readiness",
     );
   }
 
   if (overallPercentage < 60) {
     analysis.recommendations.push(
-      "Focus on building fundamental concepts through structured learning and practice"
+      "Focus on building fundamental concepts through structured learning and practice",
     );
     analysis.recommendations.push(
-      "Consider online courses or bootcamps for weak areas"
+      "Consider online courses or bootcamps for weak areas",
     );
   } else {
     analysis.recommendations.push(
-      "Practice with real-world projects to apply your knowledge"
+      "Practice with real-world projects to apply your knowledge",
     );
     analysis.recommendations.push(
-      "Prepare for company-specific interviews and coding challenges"
+      "Prepare for company-specific interviews and coding challenges",
     );
   }
 

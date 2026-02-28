@@ -12,6 +12,8 @@ const GameUI = ({
   onRoomComplete,
   onTestComplete,
   gameCompleted,
+  interviewActive = false,
+  onInterviewReaction = null,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -47,6 +49,25 @@ const GameUI = ({
     onCloseUI();
   };
 
+  // Special handling for Interview Panel - render as overlay without fullscreen panel
+  if (showUI === "interview") {
+    return (
+      <div className="absolute inset-0 z-40">
+        {isLoading ? (
+          <LoadingScreen testType={showUI} />
+        ) : (
+          <InterviewPanel
+            isActive={interviewActive}
+            onReaction={onInterviewReaction}
+            onComplete={(result, answers, questions) =>
+              handleTestComplete("interview", result, answers, questions)
+            }
+          />
+        )}
+      </div>
+    );
+  }
+
   if (!showUI) return null;
 
   return (
@@ -65,7 +86,6 @@ const GameUI = ({
             <h2 className="text-xl font-bold">
               {showUI === "aptitude" && "Aptitude Test"}
               {showUI === "coding" && "Coding Challenge"}
-              {showUI === "interview" && "HR Interview"}
             </h2>
             <button
               onClick={onCloseUI}
@@ -84,22 +104,15 @@ const GameUI = ({
               <>
                 {showUI === "aptitude" && (
                   <AptitudeTest
-                    onComplete={(result) =>
-                      handleTestComplete("aptitude", result)
+                    onComplete={(result, questions, answers) =>
+                      handleTestComplete("aptitude", result, questions, answers)
                     }
                   />
                 )}
                 {showUI === "coding" && (
                   <CodingChallenge
-                    onComplete={(result) =>
-                      handleTestComplete("coding", result)
-                    }
-                  />
-                )}
-                {showUI === "interview" && (
-                  <InterviewPanel
-                    onComplete={(result) =>
-                      handleTestComplete("interview", result)
+                    onComplete={(result, language, code) =>
+                      handleTestComplete("coding", result, language, code)
                     }
                   />
                 )}

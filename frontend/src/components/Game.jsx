@@ -8,6 +8,7 @@ import GameUI from "./ui/GameUI";
 import Report from "./ui/Report";
 import AIAnalysis from "./ui/AIAnalysis";
 import ComprehensiveAnalysis from "./ui/ComprehensiveAnalysis";
+import RoomIntro from "./ui/RoomIntro";
 import {
   generateAptitudeAnalysis,
   generateCodingAnalysis,
@@ -67,6 +68,13 @@ const Game = () => {
   });
   const [testFailed, setTestFailed] = useState(false);
 
+  // Interview immersive state
+  const [interviewActive, setInterviewActive] = useState(false);
+  const [interviewReaction, setInterviewReaction] = useState(null);
+
+  // Coding activation state
+  const [codingActivating, setCodingActivating] = useState(false);
+
   useEffect(() => {
     if (stage !== "door") return;
     if (textPhase === 0) setTimeout(() => setTextPhase(1), 1500);
@@ -75,7 +83,8 @@ const Game = () => {
     else if (textPhase === 3) setTimeout(() => setTextPhase(4), 2000);
   }, [textPhase, stage]);
 
-  const handleLockClick = () => {
+  const handleLockClick = (e) => {
+    e.stopPropagation();
     console.log("🧠 Cognitive Lock clicked!");
     console.log("🔊 Playing metallic unlock sound...");
 
@@ -94,26 +103,33 @@ const Game = () => {
       console.log("💡 Light beam effect activated");
     }, 300);
 
-    // Transition to unlock stage after 500ms
+    // Transition to unlock stage after 800ms
     setTimeout(() => {
       console.log("🚪 Door unlocking... Transitioning to Cognitive Chamber");
       setStage("unlock");
-    }, 500);
+    }, 800);
 
-    // Fade to black after unlock animation (1.5s total)
+    // Fade to black after unlock animation
     setTimeout(() => {
       setIsFading(true);
-      setTimeout(() => {
-        setStage("intro");
-        setIsFading(false);
-        setLockShaking(false);
-        setLightBeam(false);
-      }, 700); // 700ms fade transition (within 500-800ms range)
-    }, 1500);
+    }, 1800);
+
+    // Show intro slide after fade completes
+    setTimeout(() => {
+      setStage("intro");
+      setIsFading(false);
+      setLockShaking(false);
+      setLightBeam(false);
+    }, 2500); // 1800 + 700ms fade time
   };
 
   const handleEnterChamber = () => {
-    console.log("Enter Chamber clicked! Going to classroom...");
+    console.log("Enter Chamber clicked! Transitioning to Classroom Intro...");
+    setStage("classroomIntro");
+  };
+
+  const handleEnterClassroom = () => {
+    console.log("Enter Classroom clicked! Going to 3D classroom...");
     setStage("classroom");
   };
 
@@ -175,16 +191,34 @@ const Game = () => {
         return (
           <CodingLabScene
             onComplete={() => handleRoomComplete("codingLab")}
-            onShowUI={(type) => setShowUI(type)}
+            onShowUI={(type) => {
+              if (type === "coding" && !roomsCompleted.codingLab) {
+                setCodingActivating(true);
+              }
+              setShowUI(type);
+            }}
             completed={roomsCompleted.codingLab}
+            isActivating={codingActivating}
+            onActivationComplete={() => {
+              setCodingActivating(false);
+              setShowUI("coding");
+            }}
           />
         );
       case 3:
         return (
           <InterviewRoomScene
             onComplete={() => handleRoomComplete("interviewRoom")}
-            onShowUI={(type) => setShowUI(type)}
+            onShowUI={(type) => {
+              if (type === "interview") {
+                setInterviewActive(true);
+              }
+              setShowUI(type);
+            }}
             completed={roomsCompleted.interviewRoom}
+            isActive={interviewActive}
+            reaction={interviewReaction}
+            interviewCompleted={showUI === null && roomsCompleted.interviewRoom}
           />
         );
       default:
@@ -219,48 +253,66 @@ const Game = () => {
   };
 
   const handleTestComplete = (testType, result, param1, param2, param3) => {
-    setScores((prev) => ({ ...prev, [testType]: result }));
-    setTestData((prev) => ({
-      ...prev,
+    // Update scores and test data
+    const newScores = { ...scores, [testType]: result };
+    const newTestData = {
+      ...testData,
       [testType]: { result, param1, param2, param3 },
-    }));
+    };
+    setScores(newScores);
+    setTestData(newTestData);
+
     const failed = !result.passed;
-    if (failed) {
-      setTestFailed(true);
-      return;
+
+    // Handle interview reaction when interview completes
+    if (testType === "interview" && result.passed) {
+      setInterviewReaction("positive");
+    } else if (testType === "interview") {
+      setInterviewReaction("neutral");
     }
-    const completedTests =
-      Object.values(scores).filter((score) => score !== null).length + 1;
+
+    // Always generate analysis after each test (pass or fail)
+    setTimeout(() => {
+      let analysis = null;
+      if (testType === "aptitude") {
+        analysis = generateAptitudeAnalysis(result, param1, param2);
+      } else if (testType === "coding") {
+        analysis = generateCodingAnalysis(result, param2, param1);
+      } else if (testType === "interview") {
+        analysis = generateInterviewAnalysis(result, param1);
+      }
+
+      if (analysis) {
+        setAnalysisData(analysis);
+        setShowAIAnalysis(testType);
+      }
+    }, 1000);
+
+    // Don't show test failed screen - show AIAnalysis feedback instead
+    // setTestFailed(true); // Removed to show feedback report instead
+    // return; // Don't return early - let the AIAnalysis show
+
+    const completedTests = Object.values(newScores).filter(
+      (score) => score !== null,
+    ).length;
     const allCompleted = completedTests === 3;
 
     if (allCompleted) {
       setTimeout(() => {
         const comprehensiveAnalysis = generateComprehensiveAnalysis(
-          scores,
-          testData,
+          newScores,
+          newTestData,
         );
         setComprehensiveAnalysisData(comprehensiveAnalysis);
         setShowComprehensiveAnalysis(true);
-      }, 1000);
-    } else {
-      setTimeout(() => {
-        let analysis = null;
-        if (testType === "aptitude")
-          analysis = generateAptitudeAnalysis(result, param1, param2);
-        else if (testType === "coding")
-          analysis = generateCodingAnalysis(result, param2, param1);
-        else if (testType === "interview")
-          analysis = generateInterviewAnalysis(result, param1);
-        if (analysis) {
-          setAnalysisData(analysis);
-          setShowAIAnalysis(testType);
-        }
-      }, 1000);
+      }, 1500);
     }
   };
 
   const renderDoorScene = () => (
     <div className="absolute inset-0 z-50 bg-gradient-to-b from-slate-950 via-slate-900 to-black flex items-center justify-center">
+      {/* Vignette effect */}
+      <div className="absolute inset-0 vignette"></div>
       <div className="absolute inset-0 bg-radial-gradient from-transparent via-transparent to-black/60"></div>
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
@@ -296,17 +348,9 @@ const Game = () => {
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-6">
               <button
                 type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  handleLockClick();
-                }}
-                className={`group relative w-20 h-24 bg-slate-900 rounded-lg border-2 border-blue-500 hover:border-blue-400 transition-all duration-300 hover:scale-110 cursor-pointer shadow-[0_0_25px_rgba(59,130,246,0.5)] ${lockBouncing ? "animate-lockBounce" : "animate-pulseGlow"}`}
-                style={
-                  lockBouncing
-                    ? {}
-                    : { animation: "pulseGlow 2s ease-in-out infinite" }
-                }
+                onClick={handleLockClick}
+                className="group relative w-20 h-24 bg-slate-900 rounded-lg border-2 border-blue-500 hover:border-blue-400 transition-all duration-300 hover:scale-110 cursor-pointer shadow-[0_0_25px_rgba(59,130,246,0.5)] z-[100]"
+                style={{ animation: "pulseGlow 2s ease-in-out infinite" }}
               >
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="text-4xl">🧠</span>
@@ -424,8 +468,22 @@ const Game = () => {
     </div>
   );
 
+  const handleClassroomIntroComplete = () => {
+    console.log("Classroom intro complete! Transitioning to 3D classroom...");
+    setStage("classroom");
+  };
+
+  const renderClassroomIntroSlide = () => (
+    <RoomIntro
+      title="Classroom"
+      subtitle="Room 1 - Initializing Aptitude Test..."
+      accentColor="#3b82f6"
+      onComplete={handleClassroomIntroComplete}
+    />
+  );
+
   const renderClassroom = () => (
-    <>
+    <div className="absolute inset-0 z-50">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {Array.from({ length: 20 }, (_, i) => (
           <div
@@ -478,6 +536,8 @@ const Game = () => {
         onRoomComplete={handleRoomComplete}
         onTestComplete={handleTestComplete}
         gameCompleted={gameCompleted}
+        interviewActive={interviewActive}
+        onInterviewReaction={(reaction) => setInterviewReaction(reaction)}
       />
 
       <div className="absolute top-4 right-4 flex flex-col gap-2 z-10">
@@ -538,14 +598,7 @@ const Game = () => {
           <div className="text-xs text-white/70 mb-1">Current Location</div>
           <div className="font-semibold">{getRoomName()}</div>
         </div>
-        {!roomsCompleted.classroom && currentRoom === 1 && (
-          <button
-            onClick={() => setShowUI("aptitude")}
-            className="mt-3 w-full text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg"
-          >
-            🎯 Test Aptitude
-          </button>
-        )}
+        {/* Test button removed - now activated via blackboard in 3D scene */}
         {!roomsCompleted.codingLab && currentRoom === 2 && (
           <button
             onClick={() => setShowUI("coding")}
@@ -646,23 +699,7 @@ const Game = () => {
             <button
               onClick={() => {
                 localStorage.removeItem("escapeRoomGameState");
-                setCurrentRoom(1);
-                setKeysCollected({ keyA: false, keyB: false, keyC: false });
-                setRoomsCompleted({
-                  classroom: false,
-                  codingLab: false,
-                  interviewRoom: false,
-                });
-                setScores({ aptitude: null, coding: null, interview: null });
-                setTestFailed(false);
-                setShowUI(null);
-                setGameCompleted(false);
-                setShowReport(false);
-                setShowAIAnalysis(null);
-                setAnalysisData(null);
-                setShowComprehensiveAnalysis(false);
-                setComprehensiveAnalysisData(null);
-                setTestData({ aptitude: null, coding: null, interview: null });
+                window.location.reload();
               }}
               className="bg-white text-red-600 px-6 py-3 rounded-xl font-bold hover:bg-red-50"
             >
@@ -671,7 +708,7 @@ const Game = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 
   return (
@@ -681,6 +718,7 @@ const Game = () => {
       {stage === "door" && renderDoorScene()}
       {stage === "unlock" && renderUnlockScene()}
       {stage === "intro" && renderIntroSlide()}
+      {stage === "classroomIntro" && renderClassroomIntroSlide()}
       {stage === "classroom" && renderClassroom()}
     </div>
   );
